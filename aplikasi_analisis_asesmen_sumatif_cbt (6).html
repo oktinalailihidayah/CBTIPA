@@ -1,0 +1,2381 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGAP IPA - Asesmen Sumatif & Analisis Butir Soal | SMP Diponegoro Sampang</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        @media print {
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            .page-break { page-break-before: always; }
+            body { background: white; color: black; padding: 0; margin: 0; }
+            .shadow-sm, .shadow, .shadow-lg, .shadow-xl { box-shadow: none !important; }
+            .border { border-color: #cbd5e1 !important; }
+            .tab-content.hidden { display: none !important; }
+            .tab-content:not(.hidden) { display: block !important; }
+            table { width: 100% !important; page-break-inside: auto; }
+            tr { page-break-inside: avoid; page-break-after: auto; }
+            thead { display: table-header-group; }
+            select, input { border: none !important; background: transparent !important; appearance: none !important; font-weight: bold !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- ===================================================================== -->
+    <!-- POP-UP AWAL: PILIH ROLE USER & MODUL EDUKATIF BERMUTU 2011            -->
+    <!-- ===================================================================== -->
+    <div id="roleSelectionModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[100] flex items-center justify-center p-3 sm:p-4 no-print overflow-y-auto">
+        <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-xl w-full my-auto overflow-hidden transition-all max-h-[92vh] flex flex-col">
+            <!-- Modal Header -->
+            <div class="bg-indigo-950 text-white p-5 sm:p-6 text-center relative shrink-0">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-indigo-800 rounded-2xl flex items-center justify-center mx-auto mb-2 sm:mb-3 text-amber-400 shadow-inner">
+                    <i class="fa-solid fa-graduation-cap text-2xl sm:text-3xl"></i>
+                </div>
+                <h2 class="text-lg sm:text-xl font-extrabold tracking-tight">SIGAP IPA & Modul BERMUTU 2011</h2>
+                <p class="text-xs text-indigo-200 mt-1">Sistem Integrasi Asesmen, Analisis Butir Soal, & Pengolahan Hasil Penilaian</p>
+            </div>
+
+            <!-- Modal Scrollable Body -->
+            <div class="overflow-y-auto p-4 sm:p-6 flex-grow">
+                <!-- Step 1: Pilih Role & Wawasan Modul -->
+                <div id="roleStep1">
+                    <!-- Edukatif Banner: Pengantar Modul PPPPTK Matematika -->
+                    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3 sm:p-4 mb-4 text-xs text-amber-950">
+                        <div class="flex items-start gap-3">
+                            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 mt-0.5 font-bold">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+                            <div>
+                                <strong class="font-extrabold block mb-1">Landasan Pedagogik (Modul PPPPTK Matematika, 2011):</strong>
+                                <p class="leading-relaxed text-amber-900">
+                                    Berdasarkan Permendiknas No. 16/2007, guru profesional dituntut menguasai analisis tingkat kesukaran ($P$) dan daya beda ($D$) butir soal serta mengelola hasil penilaian untuk program remedial & pengayaan yang terstruktur.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="text-xs sm:text-sm font-semibold text-slate-700 text-center mb-4">Silakan pilih peran (Role) Anda untuk masuk ke aplikasi:</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                        <button onclick="selectRole('siswa')" class="group p-4 sm:p-5 rounded-2xl border-2 border-slate-200 hover:border-indigo-600 hover:bg-indigo-50/50 transition-all text-center flex flex-col items-center">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-blue-100 text-blue-600 group-hover:bg-indigo-600 group-hover:text-white flex items-center justify-center text-xl sm:text-2xl mb-2 sm:mb-3 transition-colors">
+                                <i class="fa-solid fa-user-graduate"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Siswa</h3>
+                            <p class="text-[11px] sm:text-xs text-slate-500 mt-1">Mengerjakan CBT interaktif per butir soal & melihat umpan balik nilai instan</p>
+                        </button>
+
+                        <button onclick="selectRole('guru')" class="group p-4 sm:p-5 rounded-2xl border-2 border-slate-200 hover:border-emerald-600 hover:bg-emerald-50/50 transition-all text-center flex flex-col items-center">
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-emerald-100 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white flex items-center justify-center text-xl sm:text-2xl mb-2 sm:mb-3 transition-colors">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Guru / Pendidik</h3>
+                            <p class="text-[11px] sm:text-xs text-slate-500 mt-1">Mengelola bank soal, analisis statistik butir, rekap nilai & program tindak lanjut</p>
+                        </button>
+                    </div>
+
+                    <div class="mt-5 pt-3 border-t border-slate-100 text-center">
+                        <button onclick="enterBerandaGuest()" class="text-xs font-semibold text-slate-500 hover:text-indigo-600 transition">
+                            Masuk ke Halaman Beranda Utama Terlebih Dahulu <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Form Verifikasi NIS Siswa -->
+                <div id="roleStepSiswa" class="hidden">
+                    <div class="flex items-center justify-between mb-4">
+                        <button onclick="backToRoleStep1()" class="text-xs font-semibold text-slate-500 hover:text-indigo-600 flex items-center gap-1">
+                            <i class="fa-solid fa-arrow-left"></i> Ganti Role
+                        </button>
+                        <span class="bg-blue-100 text-blue-800 text-[11px] font-bold px-2.5 py-0.5 rounded-full">Akses Peserta Didik</span>
+                    </div>
+
+                    <form onsubmit="handleStudentLoginSubmit(event)" class="space-y-3 sm:space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Nomor Induk Siswa (NIS / NISN)</label>
+                            <div class="relative">
+                                <input type="text" id="loginSiswaNIS" oninput="lookupStudentByNIS()" required placeholder="Ketik NIS, misal: 007651001" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-3.5 pr-10 py-2.5 text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                                <i id="nisStatusIcon" class="fa-solid fa-magnifying-glass absolute right-3.5 top-3 text-slate-400"></i>
+                            </div>
+                            <p id="nisHelperText" class="text-[11px] text-slate-500 mt-1">Sampel NIS cepat: <button type="button" onclick="fillSampleNIS('007651001')" class="text-indigo-600 underline font-mono font-bold">007651001</button> (7A), <button type="button" onclick="fillSampleNIS('008651005')" class="text-indigo-600 underline font-mono font-bold">008651005</button> (8A), <button type="button" onclick="fillSampleNIS('009651010')" class="text-indigo-600 underline font-mono font-bold">009651010</button> (9A)</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-indigo-50/70 p-3 rounded-xl border border-indigo-100">
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-500 mb-1">Kelas</label>
+                                <input type="text" id="loginSiswaKelas" readonly placeholder="-" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold text-indigo-800 cursor-not-allowed">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="block text-[11px] font-semibold text-slate-500 mb-1">Nama Lengkap Siswa</label>
+                                <input type="text" id="loginSiswaNama" readonly placeholder="Otomatis terisi sesuai NIS" class="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm font-bold text-slate-800 cursor-not-allowed">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Kode Asesmen Tujuan Pembelajaran (TP)</label>
+                            <input type="text" id="loginKodeAsesmen" required placeholder="Masukkan kode materi, misal: TP1" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-bold uppercase tracking-wider text-indigo-900 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <p id="kodeHelperText" class="text-[11px] text-slate-500 mt-1">Direktori Kode: Kelas 7 (<span class="font-mono font-semibold">TP1-TP5</span>), Kelas 8 (<span class="font-mono font-semibold">TP6-TP10</span>), Kelas 9 (<span class="font-mono font-semibold">TP11-TP14</span>)</p>
+                        </div>
+
+                        <div id="loginErrorBox" class="hidden bg-rose-50 border border-rose-200 text-rose-700 text-xs p-3 rounded-xl flex items-center gap-2">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <span id="loginErrorMsg">Data tidak ditemukan.</span>
+                        </div>
+
+                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl text-sm shadow-lg shadow-indigo-200 transition flex items-center justify-center gap-2 mt-2">
+                            <span>Verifikasi & Mulai CBT Asesmen</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- HEADER NAVIGASI UTAMA                                                 -->
+    <!-- ===================================================================== -->
+    <header class="bg-indigo-900 text-white shadow-lg no-print sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateMainPage('beranda')">
+                <div class="bg-indigo-700 p-2.5 rounded-xl text-yellow-400">
+                    <i class="fa-solid fa-square-poll-vertical text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg sm:text-xl font-bold tracking-tight">SIGAP IPA</h1>
+                    <p class="text-[11px] text-indigo-200">SMP Diponegoro Sampang • Berbasis Modul BERMUTU 2011</p>
+                </div>
+            </div>
+
+            <!-- Navigasi 3 Halaman Utama -->
+            <nav class="flex items-center bg-indigo-950/60 p-1 rounded-xl border border-indigo-700/50">
+                <button onclick="navigateMainPage('beranda')" id="navBtnBeranda" class="main-nav-btn px-3.5 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white text-indigo-900 shadow">
+                    <i class="fa-solid fa-house"></i> Beranda
+                </button>
+                <button onclick="navigateMainPage('asesmen')" id="navBtnAsesmen" class="main-nav-btn px-3.5 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-indigo-200 hover:text-white">
+                    <i class="fa-solid fa-laptop-file"></i> Asesmen
+                </button>
+                <button onclick="navigateMainPage('analisis')" id="navBtnAnalisis" class="main-nav-btn px-3.5 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 text-indigo-200 hover:text-white">
+                    <i class="fa-solid fa-chart-line"></i> Analisis Asesmen
+                </button>
+            </nav>
+
+            <!-- Status User & Ganti Role -->
+            <div class="flex items-center gap-2">
+                <span id="activeRoleBadge" class="bg-indigo-800 border border-indigo-600 text-indigo-100 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+                    <i class="fa-solid fa-user-shield text-amber-400"></i> Role: Tamu
+                </span>
+                <button onclick="openRoleModal()" class="bg-amber-500 hover:bg-amber-600 text-slate-900 text-xs font-bold px-3 py-1.5 rounded-lg transition shadow-sm flex items-center gap-1">
+                    <i class="fa-solid fa-right-left"></i> Ganti Role
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===================================================================== -->
+    <!-- HALAMAN 1: BERANDA EDUKATIF                                           -->
+    <!-- ===================================================================== -->
+    <section id="pageBeranda" class="main-page flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Hero Section -->
+        <div class="bg-gradient-to-br from-indigo-900 via-indigo-800 to-blue-900 rounded-3xl p-8 sm:p-10 text-white shadow-xl mb-8 relative overflow-hidden">
+            <div class="relative z-10 max-w-3xl">
+                <span class="inline-block bg-amber-400 text-indigo-950 text-xs font-extrabold px-3 py-1 rounded-full mb-4 uppercase tracking-wider">
+                    Modul PPPPTK Matematika & Program BERMUTU (2011)
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold leading-tight mb-3">
+                    Sistem Integrasi Asesmen Sumatif & Analisis Butir Soal (SIGAP IPA)
+                </h2>
+                <p class="text-indigo-100 text-sm sm:text-base leading-relaxed mb-6">
+                    Membantu guru IPA merancang asesmen berbasis Tujuan Pembelajaran (TP), menghitung Tingkat Kesukaran ($P$) & Daya Beda ($D$) secara otomatis, serta menyusun program tindak lanjut remedial dan pengayaan berdurasi 1 minggu sesuai prinsip *Teaching at the Right Level*.
+                </p>
+                <div class="flex flex-wrap gap-3">
+                    <button onclick="selectRole('siswa'); openRoleModal();" class="bg-white text-indigo-900 hover:bg-indigo-50 font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-lg transition flex items-center gap-2">
+                        <i class="fa-solid fa-user-graduate text-indigo-600"></i> Masuk Sebagai Siswa (Mulai Ujian CBT)
+                    </button>
+                    <button onclick="selectRole('guru')" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-lg transition flex items-center gap-2">
+                        <i class="fa-solid fa-chalkboard-user"></i> Masuk Dasbor Analisis Guru
+                    </button>
+                </div>
+            </div>
+            <i class="fa-solid fa-atom absolute -right-10 -bottom-10 text-[220px] text-white/5 pointer-events-none"></i>
+        </div>
+
+        <!-- 3 Pilar Modul Edukatif -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-book-bookmark"></i>
+                </div>
+                <h3 class="font-bold text-slate-900 text-lg mb-2">1. Wawasan Modul BERMUTU</h3>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                    Mengadopsi panduan pemanfaatan program pengolah angka untuk efisiensi administrasi penilaian guru dan peningkatan kompetensi pedagogik profesional.
+                </p>
+                <span class="text-xs font-bold text-indigo-600">Standar Permendiknas No. 16/2007</span>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-laptop-file"></i>
+                </div>
+                <h3 class="font-bold text-slate-900 text-lg mb-2">2. Asesmen CBT Interaktif</h3>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                    Peserta didik mengerjakan soal per butir secara terstruktur dengan pengacakan otomatis dan umpan balik nilai instan beserta rujukan program intervensi.
+                </p>
+                <button onclick="navigateMainPage('asesmen')" class="text-xs font-bold text-blue-600 hover:underline">
+                    Buka Halaman Asesmen <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition">
+                <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-calculator"></i>
+                </div>
+                <h3 class="font-bold text-slate-900 text-lg mb-2">3. Analisis Butir & Rapor</h3>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                    Dasbor otomatis menghitung indeks kesukaran, daya beda kelompok atas/bawah (27%), ketuntasan KKM, serta laporan resmi lengkap dengan lembar pengesahan.
+                </p>
+                <button onclick="navigateMainPage('analisis')" class="text-xs font-bold text-emerald-600 hover:underline">
+                    Buka Dasbor Guru <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Direktori 14 TP Kurikulum Merdeka -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+            <h3 class="font-bold text-slate-900 text-base mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-key text-amber-500"></i> Direktori 14 Tujuan Pembelajaran (CP Fase D)
+            </h3>
+            <p class="text-xs text-slate-500 mb-4">Gunakan kode asesmen berikut saat verifikasi masuk sebagai siswa.</p>
+            <div id="berandaTpDirectory" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- HALAMAN 2: ASESMEN (CBT SISWA)                                        -->
+    <!-- ===================================================================== -->
+    <section id="pageAsesmen" class="main-page hidden flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <div id="asesmenNotLoggedIn" class="bg-white rounded-3xl shadow-sm border border-slate-200 p-8 text-center">
+            <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Identitas Siswa & Kode Asesmen Diperlukan</h3>
+            <p class="text-sm text-slate-500 max-w-md mx-auto mb-6">
+                Silakan masukkan NIS dan Kode Asesmen (misal: TP1) untuk mulai mengerjakan soal asesmen sumatif.
+            </p>
+            <button onclick="selectRole('siswa'); openRoleModal();" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-6 py-3 rounded-xl shadow transition">
+                <i class="fa-solid fa-id-card mr-1.5"></i> Masukkan NIS & Kode Asesmen
+            </button>
+        </div>
+
+        <div id="asesmenQuizContainer" class="hidden">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 mb-6 flex flex-wrap justify-between items-center gap-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span id="quizKodeBadge" class="inline-block bg-indigo-100 text-indigo-800 text-xs font-extrabold px-2.5 py-1 rounded-md">KODE: TP1</span>
+                        <span class="inline-block bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full"><i class="fa-solid fa-shuffle mr-1"></i> Soal & Opsi Diacak</span>
+                    </div>
+                    <h2 id="quizMateriTitle" class="text-lg font-bold text-slate-900">TP 1: Identifikasi Makhluk Hidup</h2>
+                    <p class="text-xs text-slate-500 mt-0.5">
+                        Peserta: <strong id="quizStudentName" class="text-slate-800">-</strong> • NIS: <span id="quizStudentNIS" class="font-mono">-</span> • Kelas: <strong id="quizStudentClass" class="text-indigo-700">-</strong>
+                    </p>
+                </div>
+                <div class="text-right">
+                    <span class="text-xs text-slate-500 block">Progres Pengerjaan</span>
+                    <span id="quizProgressText" class="text-base font-extrabold text-indigo-700">Soal 1 dari 5</span>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 mb-6">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-semibold text-slate-500">Navigasi Nomor Soal:</span>
+                    <span class="text-[11px] text-slate-400">Klik nomor untuk melompat</span>
+                </div>
+                <div id="quizNumberPills" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200 p-6 sm:p-8 mb-6">
+                <div class="flex justify-between items-center pb-4 border-b border-slate-100 mb-5">
+                    <span id="quizCurrentNumberBadge" class="bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-lg">Pertanyaan No. 1</span>
+                    <span id="quizCurrentWeightBadge" class="text-xs font-semibold text-slate-400">Bobot: 20 Poin</span>
+                </div>
+
+                <p id="quizQuestionText" class="text-base sm:text-lg font-semibold text-slate-900 leading-relaxed mb-6">
+                    Memuat pertanyaan...
+                </p>
+
+                <div id="quizOptionsContainer" class="space-y-3"></div>
+            </div>
+
+            <div class="flex justify-between items-center gap-4">
+                <button id="btnQuizPrev" onclick="prevQuizQuestion()" class="bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 font-bold text-xs sm:text-sm px-5 py-3 rounded-xl transition flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali
+                </button>
+
+                <div class="flex items-center gap-3">
+                    <button id="btnQuizNext" onclick="nextQuizQuestion()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl shadow transition flex items-center gap-2">
+                        Soal Berikutnya <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <button id="btnQuizFinish" onclick="finishQuiz()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-lg shadow-emerald-200 transition flex items-center gap-2">
+                        <i class="fa-solid fa-check-double"></i> Selesai & Lihat Hasil
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="asesmenResultContainer" class="hidden space-y-6">
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden">
+                <div id="resultBannerHeader" class="bg-emerald-600 text-white p-6 sm:p-8 text-center">
+                    <span class="inline-block bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full mb-2 uppercase tracking-wider">Hasil Evaluasi Asesmen Sumatif</span>
+                    <h2 id="resultStudentName" class="text-2xl font-extrabold">Nama Siswa</h2>
+                    <p id="resultMetaInfo" class="text-xs text-white/90 mt-1">Kelas 7A • NIS: 007651001 • TP 1</p>
+
+                    <div class="mt-6 inline-flex flex-col items-center bg-white text-slate-900 px-8 py-4 rounded-2xl shadow-lg">
+                        <span class="text-xs font-bold text-slate-400 uppercase">Nilai Akhir Anda</span>
+                        <span id="resultScoreValue" class="text-5xl font-black text-emerald-600 my-1">100</span>
+                        <span id="resultStatusBadge" class="text-xs font-extrabold px-3 py-1 rounded-full bg-emerald-100 text-emerald-800">TUNTAS (≥ KKM 75)</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 divide-x divide-slate-100 border-b border-slate-200 bg-slate-50/70 text-center py-4">
+                    <div>
+                        <span class="text-xs text-slate-500 block">Total Soal</span>
+                        <strong id="resultTotalQuestions" class="text-lg font-bold text-slate-800">5</strong>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-500 block">Jawaban Benar</span>
+                        <strong id="resultCorrectCount" class="text-lg font-bold text-emerald-600">5</strong>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-500 block">Jawaban Salah</span>
+                        <strong id="resultWrongCount" class="text-lg font-bold text-rose-600">0</strong>
+                    </div>
+                </div>
+
+                <div class="p-6 sm:p-8">
+                    <div id="resultProgramBox" class="rounded-2xl p-5 border"></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                <h3 class="font-bold text-slate-900 text-base mb-1 flex items-center gap-2">
+                    <i class="fa-solid fa-magnifying-glass-chart text-indigo-600"></i> Analisis Jawaban Per Butir Soal
+                </h3>
+                <p class="text-xs text-slate-500 mb-5">Perbandingan jawaban pilihan Anda dengan kunci jawaban dan tingkat kesukaran soal di kelas.</p>
+                
+                <div id="resultItemBreakdown" class="space-y-4"></div>
+
+                <div class="mt-8 pt-5 border-t border-slate-200 flex flex-wrap justify-between items-center gap-3">
+                    <button onclick="retakeCurrentQuiz()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-4 py-2.5 rounded-xl transition">
+                        <i class="fa-solid fa-rotate-left mr-1"></i> Ulangi Asesmen Ini
+                    </button>
+                    <button onclick="navigateMainPage('beranda')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow transition">
+                        Kembali ke Beranda <i class="fa-solid fa-house ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- HALAMAN 3: DASBOR ANALISIS GURU                                       -->
+    <!-- ===================================================================== -->
+    <main id="pageAnalisis" class="main-page hidden flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <div class="flex flex-wrap justify-between items-center gap-3 mb-4 no-print">
+            <div>
+                <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Panel Analisis Butir Soal & Pengolahan Nilai (Modul BERMUTU 2011)</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-3.5 py-2 rounded-lg transition duration-200 flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-file-excel"></i> Ekspor CSV
+                </button>
+                <button onclick="window.print()" class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold px-3.5 py-2 rounded-lg transition duration-200 flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-print"></i> Cetak Laporan Tab Aktif
+                </button>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <span class="inline-block bg-indigo-100 text-indigo-800 text-xs font-bold px-2.5 py-1 rounded-md mb-2">LAPORAN RESMI ASESMEN SUMATIF</span>
+                <h2 id="headerTitle" class="text-2xl font-bold text-slate-900">Analisis Asesmen Sumatif IPA Kelas VII A</h2>
+                <p id="headerSub" class="text-sm text-slate-500 mt-0.5">TP 1: Identifikasi Makhluk Hidup • KKM: 75</p>
+            </div>
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs space-y-1">
+                <div><span class="font-semibold text-slate-600">Satuan Pendidikan:</span> SMP Diponegoro Sampang</div>
+                <div><span class="font-semibold text-slate-600">Guru Pengampu:</span> <span id="hdrNamaGuru" class="font-bold text-slate-800">Oktina Laili Hidayah, S.Pd.</span></div>
+                <div><span class="font-semibold text-slate-600">Kepala Sekolah:</span> <span id="hdrNamaKepsek" class="font-bold text-slate-800">Ahmad Mutasir, S.Pd.</span></div>
+                <div><span class="font-semibold text-slate-600">Laporan Tab:</span> <span id="lblCurrentTabPrint" class="font-bold text-indigo-700">Ringkasan & Hasil</span></div>
+            </div>
+        </div>
+
+        <!-- Tab Navigasi Guru -->
+        <div class="bg-white p-2 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-wrap justify-between items-center gap-2 no-print">
+            <div class="flex flex-wrap gap-2">
+                <button onclick="switchTab('dashboard')" id="tabBtnDashboard" class="tab-btn px-3 py-2 rounded-lg text-xs font-bold transition duration-200 bg-indigo-600 text-white shadow">
+                    <i class="fa-solid fa-chart-pie mr-1"></i> Ringkasan & Hasil
+                </button>
+                <button onclick="switchTab('tindakLanjut')" id="tabBtnTindakLanjut" class="tab-btn px-3 py-2 rounded-lg text-xs font-bold transition duration-200 text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-list-check text-rose-600 mr-1"></i> Rencana Tindak Lanjut
+                </button>
+                <button onclick="switchTab('inputMurid')" id="tabBtnMurid" class="tab-btn px-3 py-2 rounded-lg text-xs font-bold transition duration-200 text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-users text-indigo-600 mr-1"></i> Data Peserta Didik
+                </button>
+                <button onclick="switchTab('inputGuru')" id="tabBtnGuru" class="tab-btn px-3 py-2 rounded-lg text-xs font-bold transition duration-200 text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-user-tie text-purple-600 mr-1"></i> Guru & Kepsek
+                </button>
+                <button onclick="switchTab('soal')" id="tabBtnSoal" class="tab-btn px-3 py-2 rounded-lg text-xs font-bold transition duration-200 text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-file-pen text-amber-600 mr-1"></i> Soal Asesmen
+                </button>
+                <button onclick="switchTab('butirSoal')" id="tabBtnButirSoal" class="tab-btn px-3 py-2 rounded-lg text-xs font-bold transition duration-200 text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-microscope text-emerald-600 mr-1"></i> Analisis Butir Soal
+                </button>
+            </div>
+
+            <button onclick="window.print()" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs font-bold px-3 py-2 rounded-lg transition flex items-center gap-1.5">
+                <i class="fa-solid fa-print"></i> Cetak Laporan Tab Ini
+            </button>
+        </div>
+
+        <!-- Filter Global -->
+        <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 mb-6 no-print">
+            <h3 class="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-filter text-indigo-600"></i> Panel Filter Kelas & Tujuan Pembelajaran (14 Materi Esensial CP Fase D)
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-slate-500 mb-1">Tingkat / Jenjang</label>
+                    <select id="selectJenjang" onchange="handleJenjangChange()" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <option value="7">Kelas VII (Fase D)</option>
+                        <option value="8">Kelas VIII (Fase D)</option>
+                        <option value="9">Kelas IX (Fase D)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-500 mb-1">Rombongan Belajar (Kelas)</label>
+                    <select id="selectKelas" onchange="updateDashboard()" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-500 mb-1">Materi Esensial / TP (Fase D)</label>
+                    <select id="selectTP" onchange="updateDashboard()" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-slate-500 mb-1">Cari Nama Murid</label>
+                    <div class="relative">
+                        <input type="text" id="inputSearch" onkeyup="renderTable()" placeholder="Ketik nama murid..." class="w-full bg-slate-50 border border-slate-300 rounded-lg pl-9 pr-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-sm"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 1: DASHBOARD -->
+        <div id="viewDashboard" class="tab-content">
+            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-medium text-slate-500">Total Murid Kelas</p>
+                        <h4 id="statTotalMurid" class="text-2xl font-bold text-slate-900 mt-1">32</h4>
+                        <p class="text-xs text-slate-400 mt-1">Siswa Aktif</p>
+                    </div>
+                    <div class="bg-blue-50 text-blue-600 p-3.5 rounded-xl no-print">
+                        <i class="fa-solid fa-users text-xl"></i>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-medium text-slate-500">Rata-rata Nilai Kelas</p>
+                        <h4 id="statRataRata" class="text-2xl font-bold text-indigo-600 mt-1">78.5</h4>
+                        <p id="statKKMInfo" class="text-xs text-slate-400 mt-1">KKM Modul: 75</p>
+                    </div>
+                    <div class="bg-indigo-50 text-indigo-600 p-3.5 rounded-xl no-print">
+                        <i class="fa-solid fa-calculator text-xl"></i>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-medium text-slate-500">Tuntas / Pengayaan</p>
+                        <h4 id="statTuntas" class="text-2xl font-bold text-emerald-600 mt-1">24 <span id="statTuntasPersen" class="text-xs font-normal text-emerald-500">(75%)</span></h4>
+                        <p class="text-xs text-emerald-600 mt-1"><i class="fa-solid fa-circle-check"></i> Siap Pengayaan</p>
+                    </div>
+                    <div class="bg-emerald-50 text-emerald-600 p-3.5 rounded-xl no-print">
+                        <i class="fa-solid fa-user-check text-xl"></i>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-medium text-slate-500">Perlu Remedial</p>
+                        <h4 id="statRemedial" class="text-2xl font-bold text-rose-600 mt-1">8 <span id="statRemedialPersen" class="text-xs font-normal text-rose-500">(25%)</span></h4>
+                        <p class="text-xs text-rose-600 mt-1"><i class="fa-solid fa-triangle-exclamation"></i> Butuh Intervensi</p>
+                    </div>
+                    <div class="bg-rose-50 text-rose-600 p-3.5 rounded-xl no-print">
+                        <i class="fa-solid fa-user-xmark text-xl"></i>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-6">
+                <div class="p-5 border-b border-slate-200 flex flex-wrap justify-between items-center gap-3">
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base">Daftar Hasil Asesmen Sumatif Murid</h3>
+                        <p class="text-xs text-slate-500">Nilai terhitung otomatis dari pengerjaan CBT siswa maupun input matriks.</p>
+                    </div>
+                    <div class="flex items-center gap-2 no-print">
+                        <span class="inline-flex items-center text-xs text-slate-600 gap-1 bg-slate-100 px-2.5 py-1 rounded-md">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Tuntas (≥ KKM)
+                        </span>
+                        <span class="inline-flex items-center text-xs text-slate-600 gap-1 bg-slate-100 px-2.5 py-1 rounded-md">
+                            <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Remedial (< KKM)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-600 text-xs font-semibold border-b border-slate-200 uppercase tracking-wider">
+                                <th class="py-3.5 px-4 text-center w-12">No</th>
+                                <th class="py-3.5 px-4">Nama Murid</th>
+                                <th class="py-3.5 px-4 text-center">NIS / NISN</th>
+                                <th class="py-3.5 px-4 text-center">Nilai Sumatif</th>
+                                <th class="py-3.5 px-4 text-center">Status</th>
+                                <th class="py-3.5 px-4">Rekomendasi Tindak Lanjut</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTableBody" class="divide-y divide-slate-100 text-sm"></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- TAB: RENCANA TINDAK LANJUT -->
+        <div id="viewTindakLanjut" class="tab-content hidden">
+            <!-- Penjelasan Edukatif Modul BERMUTU 2011 -->
+            <div class="bg-indigo-900 text-white p-6 rounded-2xl shadow-sm mb-6 flex flex-col md:flex-row items-start md:items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-indigo-700 text-amber-400 flex items-center justify-center text-2xl shrink-0">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <h4 class="font-extrabold text-base mb-1">Panduan Tindak Lanjut Asesmen (Modul BERMUTU 2011 & Kurikulum Merdeka)</h4>
+                    <p class="text-xs text-indigo-100 leading-relaxed">
+                        Berdasarkan analisis hasil ulangan harian, siswa dikelompokkan ke dalam <strong>3 rentang remedial</strong> (0–74) dan <strong>3 rentang pengayaan</strong> (75–100). Setiap program dilengkapi langkah pembelajaran dan tugas terstruktur berdurasi <strong>1 minggu</strong> untuk memastikan ketuntasan belajar tuntas mandiri (*TaRL*).
+                    </p>
+                </div>
+            </div>
+
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center gap-2.5 text-rose-700">
+                            <div class="bg-rose-100 p-2.5 rounded-xl no-print">
+                                <i class="fa-solid fa-kit-medical text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-base">Program Remedial (Skor < <span class="lblKkmValue font-bold">75</span>)</h3>
+                                <p class="text-xs text-slate-500">Dibagi dalam 3 rentang nilai intervensi</p>
+                            </div>
+                        </div>
+                        <button onclick="openStrategyModal('remedial')" class="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition duration-200 flex items-center gap-1 shadow no-print">
+                            <i class="fa-solid fa-plus"></i> Tambah Program
+                        </button>
+                    </div>
+                    <p class="text-[11px] text-rose-700 bg-rose-50 border border-rose-200 px-3 py-2 rounded-lg mb-3 no-print">
+                        <i class="fa-solid fa-hand-pointer mr-1"></i> Klik kartu program di bawah untuk melihat rincian langkah pembelajaran & tugas siswa 1 minggu.
+                    </p>
+                    <div id="remedialStrategyEditorList" class="space-y-3 text-xs text-slate-700 bg-rose-50/50 p-4 rounded-xl border border-rose-100"></div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center gap-2.5 text-emerald-700">
+                            <div class="bg-emerald-100 p-2.5 rounded-xl no-print">
+                                <i class="fa-solid fa-rocket text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-base">Program Pengayaan (Skor <span class="lblKkmValue font-bold">75</span> - 100)</h3>
+                                <p class="text-xs text-slate-500">Dibagi dalam 3 rentang nilai tuntas</p>
+                            </div>
+                        </div>
+                        <button onclick="openStrategyModal('pengayaan')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition duration-200 flex items-center gap-1 shadow no-print">
+                            <i class="fa-solid fa-plus"></i> Tambah Program
+                        </button>
+                    </div>
+                    <p class="text-[11px] text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-2 rounded-lg mb-3 no-print">
+                        <i class="fa-solid fa-hand-pointer mr-1"></i> Klik kartu program di bawah untuk melihat rincian pendalaman materi & proyek 1 minggu.
+                    </p>
+                    <div id="pengayaanStrategyEditorList" class="space-y-3 text-xs text-slate-700 bg-emerald-50/50 p-4 rounded-xl border border-emerald-100"></div>
+                </div>
+            </section>
+
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="p-4 bg-rose-50 border-b border-rose-100 flex justify-between items-center">
+                        <h4 class="font-bold text-rose-800 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-user-xmark"></i> Daftar Siswa Peserta Remedial — Kelas <span id="lblTargetKelas">7A</span>
+                        </h4>
+                        <span id="lblRemedialCountBadge" class="bg-rose-200 text-rose-900 font-bold px-2 py-0.5 rounded text-xs">0 Siswa</span>
+                    </div>
+                    <div class="overflow-x-auto max-h-[400px]">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead class="bg-slate-50">
+                                <tr>
+                                    <th class="py-2.5 px-3 text-center">No</th>
+                                    <th class="py-2.5 px-3">Nama Murid</th>
+                                    <th class="py-2.5 px-3 text-center">Skor</th>
+                                    <th class="py-2.5 px-3">Kategori Rentang & Tugas (1 Minggu)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableRemedialStudents" class="divide-y divide-slate-100"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="p-4 bg-emerald-50 border-b border-emerald-100 flex justify-between items-center">
+                        <h4 class="font-bold text-emerald-800 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-user-check"></i> Daftar Siswa Peserta Pengayaan — Kelas <span class="lblKelasText">7A</span>
+                        </h4>
+                        <span id="lblPengayaanCountBadge" class="bg-emerald-200 text-emerald-900 font-bold px-2 py-0.5 rounded text-xs">0 Siswa</span>
+                    </div>
+                    <div class="overflow-x-auto max-h-[400px]">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead class="bg-slate-50">
+                                <tr>
+                                    <th class="py-2.5 px-3 text-center">No</th>
+                                    <th class="py-2.5 px-3">Nama Murid</th>
+                                    <th class="py-2.5 px-3 text-center">Skor</th>
+                                    <th class="py-2.5 px-3">Kategori Rentang & Tugas (1 Minggu)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablePengayaanStudents" class="divide-y divide-slate-100"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- TAB: DATA PESERTA DIDIK -->
+        <div id="viewInputMurid" class="tab-content hidden">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-6">
+                <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base">Manajemen Data Peserta Didik — Kelas <span id="lblDataKelasTitle" class="text-indigo-700">7A</span></h3>
+                        <p class="text-xs text-slate-500">Tambah atau kelola daftar siswa aktif pada rombongan belajar terpilih.</p>
+                    </div>
+                    <form onsubmit="handleAddStudent(event)" class="flex flex-wrap items-center gap-2 no-print">
+                        <input type="text" id="newStudentNIS" required placeholder="NIS (misal: 007651033)" class="bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <input type="text" id="newStudentName" required placeholder="Nama Lengkap Siswa" class="bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-4 py-2 rounded-lg transition shadow-sm">
+                            <i class="fa-solid fa-user-plus mr-1"></i> Tambah Siswa
+                        </button>
+                    </form>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200 uppercase">
+                                <th class="py-3 px-4 text-center w-12">No</th>
+                                <th class="py-3 px-4">NIS / NISN</th>
+                                <th class="py-3 px-4">Nama Lengkap Murid</th>
+                                <th class="py-3 px-4 text-center">Kelas</th>
+                                <th class="py-3 px-4 text-center no-print">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentManagementTableBody" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: GURU & KEPALA SEKOLAH -->
+        <div id="viewInputGuru" class="tab-content hidden">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-6">
+                <h3 class="font-bold text-slate-900 text-base mb-1">Pengaturan Identitas Guru Pengampu & Kepala Sekolah</h3>
+                <p class="text-xs text-slate-500 mb-5">Data ini tampil secara otomatis pada kop laporan dan lembar pengesahan cetak.</p>
+
+                <form onsubmit="handleSaveGuruKepsek(event)" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                        <h4 class="font-bold text-indigo-900 text-sm"><i class="fa-solid fa-chalkboard-user mr-1.5"></i> Guru Pengampu Kelas <span class="lblKelasText">7A</span></h4>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Lengkap & Gelar Guru</label>
+                            <input type="text" id="inputNamaGuru" required class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">NIP / NIY</label>
+                            <input type="text" id="inputNipGuru" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm font-mono">
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                        <h4 class="font-bold text-purple-900 text-sm"><i class="fa-solid fa-user-tie mr-1.5"></i> Kepala Sekolah</h4>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Lengkap & Gelar Kepala Sekolah</label>
+                            <input type="text" id="inputNamaKepsek" required class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">NIP / NIY Kepala Sekolah</label>
+                            <input type="text" id="inputNipKepsek" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm font-mono">
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2 flex items-center justify-between">
+                        <span id="guruSaveFeedback" class="text-xs font-bold text-emerald-600 hidden"><i class="fa-solid fa-circle-check mr-1"></i> Data pengesahan berhasil diperbarui!</span>
+                        <button type="submit" class="ml-auto bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow transition">
+                            <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan Identitas Pengesahan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- TAB: BANK SOAL ASESMEN -->
+        <div id="viewSoal" class="tab-content hidden">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-6">
+                <div class="flex flex-wrap justify-between items-center gap-4 mb-5">
+                    <div>
+                        <span id="lblSoalTPCode" class="inline-block bg-amber-100 text-amber-800 text-xs font-extrabold px-2.5 py-0.5 rounded mb-1">TP1</span>
+                        <h3 id="lblSoalTPTitle" class="font-bold text-slate-900 text-base">Bank Soal Tujuan Pembelajaran</h3>
+                        <p class="text-xs text-slate-500">Kelola butir soal pilihan ganda, kunci jawaban, dan bobot skor per item.</p>
+                    </div>
+                    <button onclick="openQuestionModal('add')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow transition flex items-center gap-1.5 no-print">
+                        <i class="fa-solid fa-plus"></i> Tambah Butir Soal
+                    </button>
+                </div>
+
+                <div id="questionListContainer" class="space-y-4"></div>
+            </div>
+        </div>
+
+        <!-- TAB: ANALISIS BUTIR SOAL & MATRIKS JAWABAN -->
+        <div id="viewButirSoal" class="tab-content hidden space-y-6">
+            <!-- Penjelasan Edukatif Rumus P & D -->
+            <div class="bg-emerald-900 text-white p-6 rounded-2xl shadow-sm flex flex-col md:flex-row items-start md:items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-emerald-700 text-amber-400 flex items-center justify-center text-2xl shrink-0">
+                    <i class="fa-solid fa-microscope"></i>
+                </div>
+                <div>
+                    <h4 class="font-extrabold text-base mb-1">Analisis Kualitas Butir Soal (Modul BERMUTU 2011)</h4>
+                    <p class="text-xs text-emerald-100 leading-relaxed">
+                        Tingkat Kesukaran ($P$) dihitung dari proporsi jawaban benar seluruh siswa, sedangkan Daya Beda ($D$) membandingkan kemampuan kelompok atas (27%) dan kelompok bawah (27%) dalam menjawab butir soal secara benar. Soal yang baik memiliki $D \ge 0.30$.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <h3 class="font-bold text-slate-900 text-base mb-1">1. Analisis Kualitas Butir Soal (Tingkat Kesukaran P & Daya Beda D)</h3>
+                <p class="text-xs text-slate-500 mb-4">Perhitungan otomatis berdasarkan metode kelompok atas (27%) dan kelompok bawah (27%).</p>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200 uppercase">
+                                <th class="py-3 px-3 text-center">Butir Soal</th>
+                                <th class="py-3 px-3 text-center">Kunci</th>
+                                <th class="py-3 px-3 text-center">Jml Benar</th>
+                                <th class="py-3 px-3 text-center">Indeks Kesukaran (P)</th>
+                                <th class="py-3 px-3 text-center">Kategori (P)</th>
+                                <th class="py-3 px-3 text-center">Daya Beda (D)</th>
+                                <th class="py-3 px-3 text-center">Klasifikasi (D)</th>
+                                <th class="py-3 px-3 text-center">Keputusan Soal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="analysisItemTableBody" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <h3 class="font-bold text-slate-900 text-base mb-1">2. Matriks Jawaban Siswa Per Butir Soal</h3>
+                <p class="text-xs text-slate-500 mb-4">Guru dapat menyunting pilihan jawaban siswa secara langsung jika diperlukan.</p>
+
+                <div class="overflow-x-auto max-h-[450px]">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr id="matrixHeaderRow" class="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200 uppercase"></tr>
+                        </thead>
+                        <tbody id="studentAnswerMatrixBody" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- LEMBAR PENGESAHAN CETAK -->
+        <div class="hidden print:grid grid-cols-2 gap-8 mt-10 pt-6 text-xs text-slate-800">
+            <div class="text-center">
+                <p>Mengetahui,</p>
+                <p class="font-bold">Kepala SMP Diponegoro Sampang</p>
+                <div class="h-16"></div>
+                <p id="printNamaKepsek" class="font-bold underline">Ahmad Mutasir, S.Pd.</p>
+                <p id="printNipKepsek">NIP. -</p>
+            </div>
+            <div class="text-center">
+                <p>Sampang, 2026</p>
+                <p class="font-bold">Guru Mata Pelajaran IPA</p>
+                <div class="h-16"></div>
+                <p id="printNamaGuru" class="font-bold underline">Oktina Laili Hidayah, S.Pd.</p>
+                <p id="printNipGuru">NIP. -</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL FORM EDIT / TAMBAH SOAL -->
+    <div id="questionModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 hidden no-print overflow-y-auto">
+        <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-lg w-full my-auto overflow-hidden max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center p-4 sm:p-5 border-b border-slate-200 shrink-0 bg-slate-50">
+                <h3 id="modalQuestionTitle" class="font-bold text-slate-900 text-base">Tambah Butir Soal Baru</h3>
+                <button onclick="closeQuestionModal()" class="text-slate-400 hover:text-slate-600 text-lg p-1">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <form onsubmit="handleSaveQuestion(event)" class="p-4 sm:p-6 overflow-y-auto space-y-4 flex-grow">
+                <input type="hidden" id="modalQuestionId">
+                <input type="hidden" id="modalMode" value="add">
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Pertanyaan Soal</label>
+                    <textarea id="modalQText" required rows="3" placeholder="Tuliskan teks pertanyaan soal..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Pilihan A</label>
+                        <input type="text" id="modalOptA" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Pilihan B</label>
+                        <input type="text" id="modalOptB" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Pilihan C</label>
+                        <input type="text" id="modalOptC" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Pilihan D</label>
+                        <input type="text" id="modalOptD" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Kunci Jawaban</label>
+                        <select id="modalQKey" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none font-bold text-indigo-700">
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Bobot Skor</label>
+                        <input type="number" id="modalQWeight" min="1" max="100" value="20" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none font-bold">
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-4 border-t border-slate-200">
+                    <button type="button" onclick="closeQuestionModal()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">Batal</button>
+                    <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition shadow">Simpan Soal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL FORM EDIT / TAMBAH STRATEGI -->
+    <div id="strategyModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 hidden no-print overflow-y-auto">
+        <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-lg w-full my-auto overflow-hidden max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center p-4 sm:p-5 border-b border-slate-200 shrink-0 bg-slate-50">
+                <h3 id="modalStrategyTitle" class="font-bold text-slate-900 text-base">Tambah Program Intervensi</h3>
+                <button onclick="closeStrategyModal()" class="text-slate-400 hover:text-slate-600 text-lg p-1">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <form onsubmit="handleSaveStrategy(event)" class="p-4 sm:p-6 overflow-y-auto space-y-4 flex-grow">
+                <input type="hidden" id="modalStrategyType" value="remedial">
+                <input type="hidden" id="modalStrategyIndex" value="-1">
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Nilai Minimum Rentang</label>
+                        <input type="number" id="modalStrategyMin" min="0" max="100" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Nilai Maksimum Rentang</label>
+                        <input type="number" id="modalStrategyMax" min="0" max="100" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm font-bold focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Judul Program & Ringkasan</label>
+                    <input type="text" id="modalStrategyName" required placeholder="Contoh: Program 1 (Rentang 0 - 24): Pembelajaran Ulang Intensif" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Langkah Pembelajaran & Tugas Siswa (Durasi 1 Minggu)</label>
+                    <textarea id="modalStrategySteps" required rows="4" placeholder="Tuliskan setiap langkah pembelajaran per baris..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-4 border-t border-slate-200">
+                    <button type="button" onclick="closeStrategyModal()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">Batal</button>
+                    <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition shadow">Simpan Program</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DETAIL PANDUAN LANGKAH & TUGAS 1 MINGGU -->
+    <div id="programDetailModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[90] flex items-center justify-center p-3 sm:p-4 hidden no-print overflow-y-auto">
+        <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-xl w-full my-auto overflow-hidden max-h-[92vh] flex flex-col">
+            <div id="detailModalHeader" class="bg-indigo-900 text-white p-4 sm:p-6 flex justify-between items-start gap-4 shrink-0">
+                <div>
+                    <span id="detailModalBadge" class="inline-block bg-white/20 text-white text-[11px] font-extrabold px-2.5 py-0.5 rounded-full mb-1.5 uppercase tracking-wider">RENTANG NILAI</span>
+                    <h3 id="detailModalTitle" class="text-base sm:text-lg font-extrabold leading-snug">Judul Program Pembelajaran</h3>
+                    <p id="detailModalSub" class="text-xs text-white/85 mt-1">Panduan Langkah Belajar & Penugasan Mandiri</p>
+                </div>
+                <button onclick="closeProgramDetailModal()" class="text-white/80 hover:text-white text-xl p-1">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-4 sm:p-6 space-y-4 overflow-y-auto flex-grow">
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center text-lg shrink-0">
+                        <i class="fa-solid fa-calendar-week"></i>
+                    </div>
+                    <div class="text-xs">
+                        <span class="font-extrabold text-amber-950 block">Batas Waktu Pelaksanaan & Pengumpulan Tugas: 1 Minggu (7 Hari)</span>
+                        <span id="detailModalDeadline" class="text-amber-800">Jadwal: Hari ke-1 s.d. Hari ke-7 setelah asesmen diumumkan.</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-500 mb-3 flex items-center gap-1.5">
+                        <i class="fa-solid fa-list-ol text-indigo-600"></i> Langkah-Langkah Pembelajaran & Tugas Siswa
+                    </h4>
+                    <div id="detailModalStepsList" class="space-y-2.5"></div>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 text-xs text-slate-600">
+                    <strong class="text-slate-800"><i class="fa-solid fa-circle-info text-indigo-600 mr-1"></i> Ketentuan Pengumpulan:</strong>
+                    <span id="detailModalNote">Hasil tugas dikumpulkan kepada guru mata pelajaran IPA maksimal 7 hari kalender setelah nilai diterbitkan.</span>
+                </div>
+            </div>
+
+            <div class="px-4 sm:px-6 py-3.5 bg-slate-50 border-t border-slate-200 flex justify-end shrink-0">
+                <button onclick="closeProgramDetailModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl transition shadow">
+                    Tutup Panduan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white border-t border-slate-200 py-4 mt-auto no-print">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
+            &copy; 2026 SMP Diponegoro Sampang — Sistem Analisis Asesmen & Butir Soal Terpadu (Merujuk Modul BERMUTU PPPPTK Matematika 2011).
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        function selectRole(role) {
+            appState.role = role;
+            const badge = document.getElementById('activeRoleBadge');
+            if (role === 'siswa') {
+                badge.innerHTML = `<i class="fa-solid fa-user-graduate text-amber-400"></i> Role: Siswa`;
+                document.getElementById('roleStep1').classList.add('hidden');
+                document.getElementById('roleStepSiswa').classList.remove('hidden');
+            } else if (role === 'guru') {
+                badge.innerHTML = `<i class="fa-solid fa-chalkboard-user text-emerald-400"></i> Role: Guru`;
+                closeRoleModal();
+                navigateMainPage('analisis');
+            } else {
+                badge.innerHTML = `<i class="fa-solid fa-user-shield text-amber-400"></i> Role: Tamu`;
+                closeRoleModal();
+                navigateMainPage('beranda');
+            }
+        }
+
+        function openRoleModal() {
+            document.getElementById('roleSelectionModal').classList.remove('hidden');
+            document.getElementById('roleStep1').classList.remove('hidden');
+            document.getElementById('roleStepSiswa').classList.add('hidden');
+        }
+
+        function closeRoleModal() {
+            document.getElementById('roleSelectionModal').classList.add('hidden');
+        }
+
+        function backToRoleStep1() {
+            document.getElementById('roleStep1').classList.remove('hidden');
+            document.getElementById('roleStepSiswa').classList.add('hidden');
+        }
+
+        function enterBerandaGuest() {
+            selectRole('guest');
+        }
+
+        function navigateMainPage(pageName) {
+            appState.mainPage = pageName;
+            document.querySelectorAll('.main-page').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.main-nav-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-indigo-900', 'shadow');
+                btn.classList.add('text-indigo-200', 'hover:text-white');
+            });
+
+            if (pageName === 'beranda') {
+                document.getElementById('pageBeranda').classList.remove('hidden');
+                document.getElementById('navBtnBeranda').classList.add('bg-white', 'text-indigo-900', 'shadow');
+            } else if (pageName === 'asesmen') {
+                document.getElementById('pageAsesmen').classList.remove('hidden');
+                document.getElementById('navBtnAsesmen').classList.add('bg-white', 'text-indigo-900', 'shadow');
+            } else if (pageName === 'analisis') {
+                document.getElementById('pageAnalisis').classList.remove('hidden');
+                document.getElementById('navBtnAnalisis').classList.add('bg-white', 'text-indigo-900', 'shadow');
+            }
+        }
+
+        function fillSampleNIS(nisVal) {
+            document.getElementById('loginSiswaNIS').value = nisVal;
+            lookupStudentByNIS();
+        }
+
+        function lookupStudentByNIS() {
+            const nisInput = document.getElementById('loginSiswaNIS').value.trim();
+            const kelasInput = document.getElementById('loginSiswaKelas');
+            const namaInput = document.getElementById('loginSiswaNama');
+            const helper = document.getElementById('nisHelperText');
+            const icon = document.getElementById('nisStatusIcon');
+
+            let foundStudent = null;
+            let foundKelas = "";
+            Object.keys(appState.studentsData).forEach(cls => {
+                const found = (appState.studentsData[cls] || []).find(s => s.nisn === nisInput);
+                if (found) {
+                    foundStudent = found;
+                    foundKelas = cls;
+                }
+            });
+
+            if (foundStudent) {
+                kelasInput.value = foundKelas;
+                namaInput.value = foundStudent.name;
+                icon.className = "fa-solid fa-circle-check absolute right-3.5 top-3 text-emerald-600";
+                helper.innerHTML = `<span class="text-emerald-600 font-semibold">Siswa terverifikasi: ${foundStudent.name} (${foundKelas})</span>`;
+            } else {
+                kelasInput.value = "";
+                namaInput.value = "";
+                icon.className = "fa-solid fa-magnifying-glass absolute right-3.5 top-3 text-slate-400";
+            }
+        }
+
+        function handleStudentLoginSubmit(event) {
+            event.preventDefault();
+            const nisInput = document.getElementById('loginSiswaNIS').value.trim();
+            const kodeInput = document.getElementById('loginKodeAsesmen').value.trim().toUpperCase();
+            const errBox = document.getElementById('loginErrorBox');
+            const errMsg = document.getElementById('loginErrorMsg');
+
+            let foundStudent = null;
+            let foundJenjang = "7";
+            let foundKelas = "";
+            Object.keys(appState.studentsData).forEach(cls => {
+                const found = (appState.studentsData[cls] || []).find(s => s.nisn === nisInput);
+                if (found) {
+                    foundStudent = found;
+                    foundKelas = cls;
+                    foundJenjang = cls.charAt(0);
+                }
+            });
+
+            if (!foundStudent) {
+                errBox.classList.remove('hidden');
+                errMsg.innerText = "Nomor Induk Siswa (NIS) tidak ditemukan di database.";
+                return;
+            }
+
+            const listTP = tpDatabase[foundJenjang] || [];
+            const tpIndex = listTP.findIndex(tp => tp.id.toUpperCase() === kodeInput);
+
+            if (tpIndex < 0) {
+                errBox.classList.remove('hidden');
+                errMsg.innerText = `Kode Asesmen "${kodeInput}" tidak valid untuk jenjang Kelas ${foundJenjang}. Gunakan TP1 - TP14.`;
+                return;
+            }
+
+            errBox.classList.add('hidden');
+            closeRoleModal();
+            navigateMainPage('asesmen');
+            startStudentQuiz(foundStudent, foundJenjang, tpIndex);
+        }
+
+        const tpDatabase = {
+            "7": [
+                {
+                    id: "TP1",
+                    title: "TP 1 (Menelaah): Identifikasi Makhluk Hidup",
+                    kkm: 75,
+                    remedial: [],
+                    pengayaan: [],
+                    questions: [
+                        { id: 1, text: "Berikut ini yang merupakan salah satu ciri utama makhluk hidup adalah...", keys: "A", options: { A: "Bernapas dan berkembang biak", B: "Dapat berubah warna secara fisik", C: "Mempunyai wujud padat", D: "Mengeluarkan cahaya" }, weight: 20 },
+                        { id: 2, text: "Tumbuhan putri malu menguncupkan daunnya saat disentuh. Ciri makhluk hidup yang ditunjukkan adalah...", keys: "B", options: { A: "Memerlukan makanan", B: "Peka terhadap rangsang (Iritabilitas)", C: "Tumbuh dan berkembang", D: "Ekskresi" }, weight: 20 },
+                        { id: 3, text: "Proses pengeluaran zat sisa metabolisme yang tidak diperlukan lagi oleh tubuh disebut...", keys: "C", options: { A: "Respirasi", B: "Digesti", C: "Ekskresi", D: "Sirkulasi" }, weight: 20 },
+                        { id: 4, text: "Komponen abiotik yang sangat dibutuhkan untuk proses fotosintesis tumbuhan hijau adalah...", keys: "D", options: { A: "Bakteri pengurai", B: "Cacing tanah", C: "Pupuk kandang", D: "Cahaya matahari dan CO2" }, weight: 20 },
+                        { id: 5, text: "Alat pernapasan utama pada ikan saat berada di dalam air adalah...", keys: "A", options: { A: "Insang", B: "Paru-paru", C: "Trakea", D: "Kulit basah" }, weight: 20 }
+                    ]
+                },
+                {
+                    id: "TP2",
+                    title: "TP 2 (Menerapkan): Pengukuran Aspek Fisis",
+                    kkm: 75,
+                    remedial: [],
+                    pengayaan: [],
+                    questions: [
+                        { id: 1, text: "Satuan SI untuk besaran panjang adalah...", keys: "B", options: { A: "Centimeter", B: "Meter", C: "Kilometer", D: "Millimeter" }, weight: 20 },
+                        { id: 2, text: "Alat yang paling tepat untuk mengukur ketebalan kertas dengan ketelitian tinggi adalah...", keys: "C", options: { A: "Mistar", B: "Jangka sorong", C: "Mikrometer sekrup", D: "Meteran gulung" }, weight: 20 },
+                        { id: 3, text: "Massa jenis suatu benda dirumuskan dengan persamaan...", keys: "A", options: { A: "ρ = m / V", B: "ρ = m × V", C: "ρ = V / m", D: "ρ = F / A" }, weight: 20 },
+                        { id: 4, text: "Volume batu tidak beraturan paling mudah diukur menggunakan...", keys: "D", options: { A: "Penggaris", B: "Neraca Ohaus", C: "Termometer", D: "Gelas ukur diisi air" }, weight: 20 },
+                        { id: 5, text: "Besaran pokok dalam SI yang mengukur kuantitas zat adalah...", keys: "A", options: { A: "Mol", B: "Ampere", C: "Kelvin", D: "Candela" }, weight: 20 }
+                    ]
+                },
+                {
+                    id: "TP3",
+                    title: "TP 3 (Menganalisis): Klasifikasi, Sifat, & Perubahan Materi",
+                    kkm: 75,
+                    remedial: [],
+                    pengayaan: [],
+                    questions: [
+                        { id: 1, text: "Zat tunggal yang tidak dapat diuraikan lagi menjadi zat lain yang lebih sederhana disebut...", keys: "A", options: { A: "Unsur", B: "Senyawa", C: "Campuran homogen", D: "Larutan" }, weight: 20 },
+                        { id: 2, text: "Peristiwa pembusukan buah apel merupakan contoh dari perubahan...", keys: "B", options: { A: "Fisika", B: "Kimia", C: "Wujud", D: "Mekanis" }, weight: 20 },
+                        { id: 3, text: "Pemisahan campuran pasir dan air paling tepat dilakukan dengan teknik...", keys: "C", options: { A: "Distilasi", B: "Kristalisasi", C: "Filtrasi (Penyaringan)", D: "Sublimasi" }, weight: 20 },
+                        { id: 4, text: "Sifat zat yang tergantung pada jumlah dan ukuran materi disebut sifat...", keys: "D", options: { A: "Kimia", B: "Intensif", C: "Biologi", D: "Ekstensif" }, weight: 20 },
+                        { id: 5, text: "Larutan asam memiliki ciri khas yaitu mengubah warna lakmus biru menjadi...", keys: "A", options: { A: "Merah", B: "Kuning", C: "Hijau", D: "Tidak berwarna" }, weight: 20 }
+                    ]
+                },
+                {
+                    id: "TP4",
+                    title: "TP 4 (Menganalisis): Ragam Gerak, Gaya, & Tekanan",
+                    kkm: 75,
+                    remedial: [],
+                    pengayaan: [],
+                    questions: [
+                        { id: 1, text: "Perubahan posisi suatu benda terhadap titik acuan tertentu disebut...", keys: "A", options: { A: "Gerak", B: "Gaya", C: "Kecepatan", D: "Usaha" }, weight: 20 },
+                        { id: 2, text: "Hukum I Newton menjelaskan tentang sifat kelembaman benda yang dirumuskan...", keys: "B", options: { A: "F = m × a", B: "ΣF = 0", C: "F_aksi = -F_reaksi", D: "P = F / A" }, weight: 20 },
+                        { id: 3, text: "Besarnya tekanan zat padat berbanding terbalik dengan...", keys: "C", options: { A: "Gaya tekan", B: "Massa benda", C: "Luas alas bidang tekan", D: "Percepatan gravitasi" }, weight: 20 },
+                        { id: 4, text: "Prinsip kerja alat penyemprot parfum didasarkan pada Hukum...", keys: "D", options: { A: "Pascal", B: "Archimedes", C: "Newton", D: "Bernoulli" }, weight: 20 },
+                        { id: 5, text: "Benda dapat terapung di dalam air jika massa jenis benda tersebut...", keys: "A", options: { A: "Lebih kecil dari massa jenis air", B: "Sama dengan massa jenis air", C: "Lebih besar dari massa jenis air", D: "Tidak terpengaruh massa jenis" }, weight: 20 }
+                    ]
+                },
+                {
+                    id: "TP5",
+                    title: "TP 5 (Menganalisis): Pengaruh Kalor & Perpindahannya",
+                    kkm: 75,
+                    remedial: [],
+                    pengayaan: [],
+                    questions: [
+                        { id: 1, text: "Bentuk energi yang berpindah dari benda bersuhu tinggi ke benda bersuhu rendah disebut...", keys: "A", options: { A: "Kalor", B: "Suhu", C: "Derajat", D: "Usaha" }, weight: 20 },
+                        { id: 2, text: "Perpindahan kalor melalui zat tanpa disertai perpindahan partikel zatnya dinamakan...", keys: "B", options: { A: "Konveksi", B: "Konduksi", C: "Radiasi", D: "Evaporasi" }, weight: 20 },
+                        { id: 3, text: "Banyaknya kalor yang diperlukan untuk menaikkan suhu 1 kg zat sebesar 1 °C disebut...", keys: "C", options: { A: "Kapasitas kalor", B: "Kalor lebur", C: "Kalor jenis", D: "Kalor laten" }, weight: 20 },
+                        { id: 4, text: "Peristiwa pemuaian zat gas dimanfaatkan pada alat...", keys: "D", options: { A: "Keping bimetal", B: "Termometer raksa", C: "Kabel listrik", D: "Balon udara panas" }, weight: 20 },
+                        { id: 5, text: "Pancaran sinar matahari sampai ke bumi terjadi secara...", keys: "A", options: { A: "Radiasi", B: "Konduksi", C: "Konveksi", D: "Sublimasi" }, weight: 20 }
+                    ]
+                }
+            ],
+            "8": [
+                {
+                    id: "TP6",
+                    title: "TP 6 (Menganalisis): Posisi Relatif Bumi-Bulan-Matahari",
+                    kkm: 75,
+                    remedial: [],
+                    pengayaan: [],
+                    questions: [
+                        { id: 1, text: "Gerhana Matahari total terjadi saat posisi Bulan berada di...", keys: "A", options: { A: "Antara Bumi dan Matahari dalam satu garis lurus", B: "Di belakang Bumi", C: "Tegak lurus dengan Bumi", D: "Di luar orbit Bumi" }, weight: 20 },
+                        { id: 2, text: "Pasang laut tertinggi (pasang purnama) terjadi ketika fase Bulan...", keys: "B", options: { A: "Sabit", B: "Purnama dan Bulan Baru", C: "Separuh", D: "Cembung" }, weight: 20 },
+                        { id: 3, text: "Waktu yang dibutuhkan Bumi untuk sekali rotasi adalah...", keys: "C", options: { A: "365 hari", B: "30 hari", C: "24 jam", D: "12 jam" }, weight: 20 },
+                        { id: 4, text: "Peristiwa akibat revolusi Bumi mengelilingi Matahari adalah...", keys: "D", options: { A: "Siang dan malam", B: "Gerak semu harian", C: "Perbedaan waktu", D: "Perubahan musim" }, weight: 20 },
+                        { id: 5, text: "Satelit alami yang dimiliki oleh planet Bumi adalah...", keys: "A", options: { A: "Bulan", B: "Phobos", C: "Titan", D: "Europa" }, weight: 20 }
+                    ]
+                },
+                {
+                    id: "TP7",
+                    title: "TP 7 (Menganalisis): Sistem Organ Manusia & Gaya Hidup Sehat",
+                    kkm: 75,
+                    remedial: [],
+                    pengayaan: [],
+                    questions: [
+                        { id: 1, text: "Organ utama manusia yang berfungsi menyaring darah dan menghasilkan urine adalah...", keys: "A", options: { A: "Ginjal", B: "Hati", C: "Paru-paru", D: "Jantung" }, weight: 20 },
+                        { id: 2, text: "Proses pertukaran gas O2 dan CO2 pada sistem pernapasan terjadi di...", keys: "B", options: { A: "Bronkus", B: "Alveolus", C: "Trakea", D: "Laring" }, weight: 20 },
+                        { id: 3, text: "Pembuluh darah yang membawa darah kaya oksigen dari paru-paru kembali ke jantung adalah...", keys: "C", options: { A: "Vena cava", B: "Arteri pulmonalis", C: "Vena pulmonalis", D: "Aorta" }, weight: 20 },
+                        { id: 4, text: "Enzim ptialin di dalam rongga mulut berfungsi mengubah karbohidrat menjadi...", keys: "D", options: { A: "Asam amino", B: "Asam lemak", C: "Gliserol", D: "Maltosa/Glukosa" }, weight: 20 },
+                        { id: 5, text: "Gangguan penyempitan saluran pernapasan akibat alergi dinamakan...", keys: "A", options: { A: "Asma", B: "Bronkitis", C: "Pneumonia", D: "TBC" }, weight: 20 }
+                    ]
+                },
+                {
+                    id: "TP8",
+                    title: "TP 8 (Mengevaluasi): Zat Aditif & Adiktif Produk Kemasan",
+                    kkm: 75,
+                    remedial: [],
+                    pengayaan: [],
+                    questions: [
+                        { id: 1, text: "Bahan yang sengaja ditambahkan ke dalam makanan untuk meningkatkan rasa/penampilan disebut...", keys: "A", options: { A: "Zat aditif", B: "Zat adiktif", C: "Psikotropika", D: "Suplemen" }, weight: 20 },
+                        { id: 2, text: "Zat pengawet buatan yang sering disalahgunakan untuk makanan bakso/tahu adalah...", keys: "B", options: { A: "Monosodium glutamat", B: "Formalin dan boraks", C: "Tartrazin", D: "Asam sitrat" }, weight: 20 },
+                        { id: 3, text: "Zat adiktif yang terdapat di dalam daun tembakau dan rokok adalah...", keys: "C", options: { A: "Kafein", B: "Alkohol", C: "Nikotin", D: "Tarin" }, weight: 20 },
+                        { id: 4, text: "Pewarna alami hijau yang aman digunakan untuk makanan diperoleh dari...", keys: "D", options: { A: "Kunyit", B: "Wortel", C: "Buah naga", D: "Daun suji/pandan" }, weight: 20 },
+                        { id: 5, text: "Dampak negatif utama dari konsumsi Monosodium Glutamat (MSG) berlebihan adalah...", keys: "A", options: { A: "Chinese Restaurant Syndrome (pusing/mual)", B: "Kerusakan ginjal permanen", C: "Penyakit diabetes", D: "Ketergantungan psikis" }, weight: 20 }
+                    ]
+                },
+                {
+                    id: "TP9",
+                    title: "TP 9 (Menganalisis): Hubungan Usaha dan Energi",
+                    kkm: 75,
+                    remedial: [],
+                    pengayaan: [],
+                    questions: [
+                        { id: 1, text: "Usaha secara matematis dirumuskan sebagai perkalian antara...", keys: "A", options: { A: "Gaya dan perpindahan", B: "Massa dan percepatan", C: "Daya dan waktu", D: "Gaya dan waktu" }, weight: 20 },
+                        { id: 2, text: "Energi yang dimiliki oleh benda karena kedudukan atau ketinggiannya disebut...", keys: "B", options: { A: "Energi kinetik", B: "Energi potensial", C: "Energi mekanik", D: "Energi kalor" }, weight: 20 },
+                        { id: 3, text: "Buah kelapa jatuh dari pohon. Saat mendekati tanah, energi potensialnya berubah menjadi...", keys: "C", options: { A: "Energi kimia", B: "Energi listrik", C: "Energi kinetik", D: "Energi nuklir" }, weight: 20 },
+                        { id: 4, text: "Satuan standar SI untuk menyatakan besarnya energi dan usaha adalah...", keys: "D", options: { A: "Watt", B: "Newton", C: "Pascal", D: "Joule" }, weight: 20 },
+                        { id: 5, text: "Pesawat sederhana yang memanfaatkan prinsip bidang miring adalah...", keys: "A", options: { A: "Tangga berbelok & sekrup", B: "Gunting & pinset", C: "Katrol timba air", D: "Wheelbarrow (gerobak dorong)" }, weight: 20 }
+                    ]
+                },
+                {
+                    id: "TP10",
+                    title: "TP 10 (Menganalisis): Gelombang & Pemanfaatannya",
+                    kkm: 75,
+                    remedial: [],
+                    pengayaan: [],
+                    questions: [
+                        { id: 1, text: "Banyaknya getaran yang terjadi dalam waktu satu detik disebut...", keys: "A", options: { A: "Frekuensi", B: "Periode", C: "Amplitudo", D: "Cepat rambat" }, weight: 20 },
+                        { id: 2, text: "Gelombang yang arah getarnya tegak lurus dengan arah rambatnya dinamakan...", keys: "B", options: { A: "Gelombang longitudinal", B: "Gelombang transversal", C: "Gelombang mekanik", D: "Gelombang stasioner" }, weight: 20 },
+                        { id: 3, text: "Bunyi dengan frekuensi di atas 20.000 Hz yang dimanfaatkan dalam teknologi USG adalah...", keys: "C", options: { A: "Infrasonik", B: "Audiosonik", C: "Ultrasonik", D: "Supersonik" }, weight: 20 },
+                        { id: 4, text: "Alat optik yang digunakan untuk melihat benda-benda renik/mikroskopis adalah...", keys: "D", options: { A: "Teleskop", B: "Kamera", C: "Lup", D: "Mikroskop" }, weight: 20 },
+                        { id: 5, text: "Cacat mata miopi (rabun jauh) dapat ditolong dengan menggunakan kaca mata berlensa...", keys: "A", options: { A: "Cekung (Negatif)", B: "Cembung (Positif)", C: "Silindris", D: "Ganda (Bifokal)" }, weight: 20 }
+                    ]
+                }
+            ],
+            "9": [
+                {
+                    id: "TP11",
+                    title: "TP 11 (Menganalisis): Pewarisan Sifat (Hereditas)",
+                    kkm: 75,
+                    remedial: [],
+                    pengayaan: [],
+                    questions: [
+                        { id: 1, text: "Sifat genetik yang menutupi sifat pasangannya disebut sifat...", keys: "A", options: { A: "Dominan", B: "Resesif", C: "Intermediet", D: "Genotip" }, weight: 20 },
+                        { id: 2, text: "Persilangan antara dua individu dengan satu sifat beda disebut persilangan...", keys: "B", options: { A: "Dihibrid", B: "Monohibrid", C: "Trihibrid", D: "Polyhibrid" }, weight: 20 },
+                        { id: 3, text: "Struktur pembawa informasi genetik yang berada di dalam inti sel adalah...", keys: "C", options: { A: "Ribosom", B: "Sitoplasma", C: "Kromosom", D: "Membran sel" }, weight: 20 },
+                        { id: 4, text: "Jumlah kromosom tubuh (autosom) pada sel somatis manusia normal adalah...", keys: "D", options: { A: "23 pasang", B: "44 buah", C: "2 buah", D: "46 buah (22 pasang + 1 pasang gonosom)" }, weight: 20 },
+                        { id: 5, text: "Penampakan sifat fisik makhluk hidup yang dapat diamati dinamakan...", keys: "A", options: { A: "Fenotip", B: "Genotip", C: "Alel", D: "Kariotip" }, weight: 20 }
+                    ]
+                },
+                {
+                    id: "TP12",
+                    title: "TP 12 (Menganalisis & Merancang): Interaksi Makhluk Hidup & Lingkungan",
+                    kkm: 75,
+                    remedial: [],
+                    pengayaan: [],
+                    questions: [
+                        { id: 1, text: "Bakteri dan jamur dalam ekosistem bertindak sebagai pengurai yang disebut...", keys: "A", options: { A: "Dekomposer", B: "Produsen", C: "Konsumen primer", D: "Detritivor" }, weight: 20 },
+                        { id: 2, text: "Hubungan simbiotik antara anemon laut dan ikan badut tergolong simbiosis...", keys: "B", options: { A: "Parasitisme", B: "Mutualisme", C: "Komensalisme", D: "Amensalisme" }, weight: 20 },
+                        { id: 3, text: "Akumulasi zat pencemar bermotor berlebihan yang menyebabkan eutrofikasi di perairan ditandai oleh...", keys: "C", options: { A: "Air menjadi bening", B: "Ikan makin berkembang", C: "Ledakan pertumbuhan eceng gondok", D: "Oksigen terlarut meningkat" }, weight: 20 },
+                        { id: 4, text: "Upaya penghijauan kembali hutan yang gundul dinamakan...", keys: "D", options: { A: "Sanitasi", B: "Eksploitasi", C: "Konservasi", D: "Reboisasi" }, weight: 20 },
+                        { id: 5, text: "Gas utama penyumbang efek rumah kaca penyebab pemanasan global adalah...", keys: "A", options: { A: "Karbondioksida (CO2)", B: "Oksigen (O2)", C: "Nitrogen (N2)", D: "Helium (He)" }, weight: 20 }
+                    ]
+                },
+                {
+                    id: "TP13",
+                    title: "TP 13 (Membuat): Bioteknologi Konvensional Pangan Lokal",
+                    kkm: 75,
+                    remedial: [],
+                    pengayaan: [],
+                    questions: [
+                        { id: 1, text: "Mikroorganisme yang digunakan dalam proses pembuatan tempe adalah...", keys: "A", options: { A: "Rhizopus oryzae", B: "Saccharomyces cerevisiae", C: "Lactobacillus bulgaricus", D: "Acetobacter xylinum" }, weight: 20 },
+                        { id: 2, text: "Proses biokimia pengubahan glukosa menjadi asam laktat/alkohol oleh mikroba tanpa O2 disebut...", keys: "B", options: { A: "Fotosintesis", B: "Fermentasi (Respirasi anaerob)", C: "Oksidasi", D: "Sterilisasi" }, weight: 20 },
+                        { id: 3, text: "Bioteknologi modern membedakan diri dari konvensional karena menggunakan teknik...", keys: "C", options: { A: "Fermentasi sederhana", B: "Pengasapan", C: "Rekayasa genetika & DNA rekombinan", D: "Ragi tape" }, weight: 20 },
+                        { id: 4, text: "Pemanfaatan mikroorganisme Acetobacter xylinum adalah dalam pembuatan...", keys: "D", options: { A: "Keju", B: "Yoghurt", C: "Kecap", D: "Nata de Coco" }, weight: 20 },
+                        { id: 5, text: "Minuman yoghurt merupakan hasil fermentasi susu menggunakan bakteri...", keys: "A", options: { A: "Lactobacillus bulgaricus", B: "Aspergillus oryzae", C: "Neurospora crassa", D: "Penicillium camemberti" }, weight: 20 }
+                    ]
+                },
+                {
+                    id: "TP14",
+                    title: "TP 14 (Menganalisis): Gejala Kemagnetan & Kelistrikan",
+                    kkm: 75,
+                    remedial: [],
+                    pengayaan: [],
+                    questions: [
+                        { id: 1, text: "Daerah di sekitar magnet yang masih dipengaruhi oleh gaya magnet disebut...", keys: "A", options: { A: "Medan magnet", B: "Kutub magnet", C: "Fluks magnet", D: "Domain magnet" }, weight: 20 },
+                        { id: 2, text: "Cara pembuatan magnet dengan mengalirkan arus listrik searah (DC) pada kumparan kawat dinamakan...", keys: "B", options: { A: "Induksi", B: "Elektromagnetik", C: "Gosokan", D: "Konduksi" }, weight: 20 },
+                        { id: 3, text: "Alat listrik di rumah tangga umumnya dirangkai secara paralel dengan tujuan...", keys: "C", options: { A: "Hemat biaya kabel", B: "Mengecilkan tegangan", C: "Tegangan tiap alat sama & jika satu mati yang lain tetap hidup", D: "Meningkatkan hambatan total" }, weight: 20 },
+                        { id: 4, text: "Alat yang memanfaat prinsip induksi elektromagnetik untuk mengubah energi mekanik jadi listrik adalah...", keys: "D", options: { A: "Motor listrik", B: "Transformator", C: "Aki", D: "Generator / Dinamo" }, weight: 20 },
+                        { id: 5, text: "Besarnya arus listrik yang mengalir berbanding lurus dengan tegangan dan berbanding terbalik dengan hambatan merupakan bunyi Hukum...", keys: "A", options: { A: "Ohm", B: "Kirchhoff", C: "Faraday", D: "Coulomb" }, weight: 20 }
+                    ]
+                }
+            ]
+        };
+
+        const baseStudentNames = [
+            "Aditya Pratama", "Ahmad Fauzi", "Aulia Putri Sukma", "Bagas Setiawan", "Bunga Lestari",
+            "Citra Dewi Nuraini", "Daniel Rizky", "Dian Sastro Wardani", "Eko Prasetyo", "Fadhil Muhammad",
+            "Fitriani Rahmawati", "Gilang Ramadhan", "Hana Pertiwi", "Irfan Hakim", "Indah Permata",
+            "Jihan Audy", "Kurniawan Dwi", "Larasati Anggraini", "Muhammad Riyan", "Nabila Syakieb",
+            "Novita Sari", "Oki Setiana", "Putra Wijaya", "Qori Sandioriva", "Rahmat Hidayat",
+            "Reza Rahadian", "Siti Nurhaliza", "Taufik Hidayat", "Utami Putri", "Vina Panduwinata",
+            "Wawan Setiawan", "Yusuf Mansur"
+        ];
+
+        function initializeStructuredPrograms() {
+            Object.keys(tpDatabase).forEach(jenjang => {
+                (tpDatabase[jenjang] || []).forEach(tp => {
+                    const cleanTopic = tp.title.includes(":") ? tp.title.split(":")[1].trim() : tp.title;
+                    tp.remedialPrograms = [
+                        {
+                            min: 0,
+                            max: 24,
+                            rangeLabel: "Rentang Nilai 0 – 24 (Intervensi Intensif)",
+                            title: `Program Remedial 1: Pembelajaran Ulang Konsep (${cleanTopic})`,
+                            summary: `Bimbingan tatap muka intensif dan pengulangan konsep fundamental materi ${cleanTopic} sesuai Modul BERMUTU.`,
+                            deadline: "1 Minggu (Hari ke-1 s.d. Hari ke-7)",
+                            steps: [
+                                `Hari 1–2 (Klinik Belajar): Mengikuti sesi pembelajaran ulang bersama guru untuk membedah 8 ciri utama / prinsip materi ${cleanTopic}.`,
+                                `Hari 3–4 (Latihan Terbimbing): Mengerjakan Lembar Kerja Terstruktur (LKT) bertahap dengan pendampingan langsung.`,
+                                `Hari 5–6 (Tugas Mandiri): Menyelesaikan 10 butir soal latihan penguatan dasar di buku catatan.`,
+                                `Hari 7 (Uji Ulang): Menyerahkan portofolio tugas dan mengikuti asesmen perbaikan nilai ketuntasan.`
+                            ]
+                        },
+                        {
+                            min: 25,
+                            max: 49,
+                            rangeLabel: "Rentang Nilai 25 – 49 (Bimbingan Terstruktur)",
+                            title: `Program Remedial 2: Klinik Analisis Miskonsepsi (${cleanTopic})`,
+                            summary: `Pendampingan kelompok kecil untuk memperbaiki kesalahan pada indikator soal yang belum dikuasai siswa.`,
+                            deadline: "1 Minggu (Hari ke-1 s.d. Hari ke-7)",
+                            steps: [
+                                `Hari 1–2 (Bedah Soal): Menganalisis butir soal yang salah dijawab pada asesmen sebelumnya.`,
+                                `Hari 3–4 (Diskusi Kelompok): Mengikuti bimbingan kelompok kecil mendiskusikan konsep materi ${cleanTopic}.`,
+                                `Hari 5–6 (Latihan Soal Setara): Menyelesaikan paket soal latihan setara KKM secara mandiri.`,
+                                `Hari 7 (Konsultasi Akhir): Menyerahkan hasil perbaikan kepada guru.`
+                            ]
+                        },
+                        {
+                            min: 50,
+                            max: 74,
+                            rangeLabel: "Rentang Nilai 50 – 74 (Pemantapan Mandiri)",
+                            title: `Program Remedial 3: Pemantapan Kompetensi & Latihan Soal (${cleanTopic})`,
+                            summary: `Penugasan mandiri terstruktur dan latihan soal pengayaan indikator pencapaian kompetensi.`,
+                            deadline: "1 Minggu (Hari ke-1 s.d. Hari ke-7)",
+                            steps: [
+                                `Hari 1–2 (Review Modul): Mempelajari kembali modul ajar dan catatan ringkas ${cleanTopic}.`,
+                                `Hari 3–5 (Penyelesaian Tugas): Menyelesaikan 15 soal latihan bertaraf KKM.`,
+                                `Hari 6 (Konsultasi Guru): Mengonfirmasi hasil latihan mandiri dan tanya jawab materi.`,
+                                `Hari 7 (Pengumpulan): Menyerahkan rekap latihan kepada guru pengampu.`
+                            ]
+                        }
+                    ];
+
+                    tp.pengayaanPrograms = [
+                        {
+                            min: 75,
+                            max: 83,
+                            rangeLabel: "Rentang Nilai 75 – 83 (Pendalaman Konsep)",
+                            title: `Program Pengayaan 1: Studi Literatur & Analisis Lanjutan (${cleanTopic})`,
+                            summary: `Mempelajari materi tambahan tingkat lanjut dan studi literatur fenomena sains terkait.`,
+                            deadline: "1 Minggu (Hari ke-1 s.d. Hari ke-7)",
+                            steps: [
+                                `Hari 1–3 (Studi Literatur): Membaca referensi tambahan atau artikel ilmiah populer mengenai aplikasi ${cleanTopic}.`,
+                                `Hari 4–5 (Analisis Studi Kasus): Mengerjakan penugasan analisis studi kasus kontekstual kehidupan sehari-hari.`,
+                                `Hari 6–7 (Penyusunan Rangkuman): Menyusun laporan hasil studi literatur setebal 1 halaman.`
+                            ]
+                        },
+                        {
+                            min: 84,
+                            max: 91,
+                            rangeLabel: "Rentang Nilai 84 – 91 (Proyek & Eksperimen Mandiri)",
+                            title: `Program Pengayaan 2: Mini Eksperimen & Perancangan Alat (${cleanTopic})`,
+                            summary: `Merancang demonstrasi atau mini eksperimen sains sederhana di rumah/sekolah.`,
+                            deadline: "1 Minggu (Hari ke-1 s.d. Hari ke-7)",
+                            steps: [
+                                `Hari 1–2 (Perencanaan Proyek): Merancang alat peraga sederhana atau mini eksperimen ${cleanTopic}.`,
+                                `Hari 3–5 (Pelaksanaan & Pengujian): Menguji coba eksperimen mandiri, mencatat data pengamatan.`,
+                                `Hari 6–7 (Dokumentasi): Membuat dokumentasi foto/video atau laporan praktikum singkat.`
+                            ]
+                        },
+                        {
+                            min: 92,
+                            max: 100,
+                            rangeLabel: "Rentang Nilai 92 – 100 (Tutor Sebaya & Infografis)",
+                            title: `Program Pengayaan 3: Tutor Sebaya & Pembuatan Infografis (${cleanTopic})`,
+                            summary: `Menjadi tutor sebaya bagi rekan sekelas yang memerlukan bimbingan dan membuat infografis digital.`,
+                            deadline: "1 Minggu (Hari ke-1 s.d. Hari ke-7)",
+                            steps: [
+                                `Hari 1–2 (Penyusunan Infografis): Merancang materi rangkuman kreatif atau infografis digital ${cleanTopic}.`,
+                                `Hari 3–5 (Tutor Sebaya): Membimbing rekan sekelas yang masuk kategori remedial dalam sesi belajar kelompok.`,
+                                `Hari 6–7 (Publikasi Portofolio): Menyerahkan hasil infografis digital dan laporan pendampingan kepada guru.`
+                            ]
+                        }
+                    ];
+                });
+            });
+        }
+
+        function getMatchedProgramForScore(tpObj, score) {
+            const list = score >= tpObj.kkm ? (tpObj.pengayaanPrograms || []) : (tpObj.remedialPrograms || []);
+            return list.find(p => score >= p.min && score <= p.max) || list[0];
+        }
+
+        function generateAllStudentData() {
+            const listJenjang = ["7", "8", "9"];
+            const listSuf = ["A", "B", "C", "D"];
+            let nameCounter = 0;
+
+            listJenjang.forEach(j => {
+                listSuf.forEach((suf, sIdx) => {
+                    const clsKey = `${j}${suf}`;
+                    const classStudents = [];
+                    for (let i = 1; i <= 8; i++) {
+                        const name = baseStudentNames[nameCounter % baseStudentNames.length];
+                        nameCounter++;
+                        const nisn = `00${j}6510${(sIdx * 8) + i < 10 ? '0' + ((sIdx * 8) + i) : (sIdx * 8) + i}`;
+                        classStudents.push({
+                            id: Date.now() + nameCounter,
+                            nisn: nisn,
+                            name: name,
+                            kelas: clsKey
+                        });
+                    }
+                    appState.studentsData[clsKey] = classStudents;
+                });
+            });
+
+            Object.keys(tpDatabase).forEach(jenjang => {
+                (tpDatabase[jenjang] || []).forEach(tp => {
+                    [`${jenjang}A`, `${jenjang}B`].forEach(cls => {
+                        const key = `${cls}-${tp.id}`;
+                        appState.studentAnswers[key] = [];
+                        (appState.studentsData[cls] || []).forEach(s => {
+                            const answers = {};
+                            tp.questions.forEach((q, qIdx) => {
+                                const keysArr = ["A", "B", "C", "D"];
+                                answers[q.id] = (s.id + q.id + qIdx) % 3 === 0 ? q.keys : keysArr[(s.id + qIdx) % 4];
+                            });
+                            appState.studentAnswers[key].push({ studentId: s.id, answers: answers });
+                        });
+                    });
+                });
+            });
+        }
+
+        function renderBerandaDirectory() {
+            const container = document.getElementById('berandaTpDirectory');
+            if (!container) return;
+            container.innerHTML = `
+                <div class="p-4 rounded-2xl bg-indigo-50/70 border border-indigo-100">
+                    <h4 class="font-bold text-indigo-900 text-sm mb-2"><i class="fa-solid fa-school mr-1"></i> Kelas 7 (Fase D)</h4>
+                    <p class="text-xs text-slate-600 mb-3">Materi: Klasifikasi Makhluk Hidup, Pengukuran, Sifat Materi, Gerak & Gaya, Kalor.</p>
+                    <div class="flex flex-wrap gap-1.5"><span class="bg-indigo-600 text-white font-mono text-xs font-bold px-2.5 py-1 rounded-lg">TP1 - TP5</span></div>
+                </div>
+                <div class="p-4 rounded-2xl bg-blue-50/70 border border-blue-100">
+                    <h4 class="font-bold text-blue-900 text-sm mb-2"><i class="fa-solid fa-school mr-1"></i> Kelas 8 (Fase D)</h4>
+                    <p class="text-xs text-slate-600 mb-3">Materi: Bumi-Bulan-Matahari, Organ Manusia, Zat Aditif/Adiktif, Usaha & Energi, Gelombang.</p>
+                    <div class="flex flex-wrap gap-1.5"><span class="bg-blue-600 text-white font-mono text-xs font-bold px-2.5 py-1 rounded-lg">TP6 - TP10</span></div>
+                </div>
+                <div class="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100">
+                    <h4 class="font-bold text-emerald-900 text-sm mb-2"><i class="fa-solid fa-school mr-1"></i> Kelas 9 (Fase D)</h4>
+                    <p class="text-xs text-slate-600 mb-3">Materi: Pewarisan Sifat, Ekosistem, Bioteknologi, Kemagnetan & Kelistrikan.</p>
+                    <div class="flex flex-wrap gap-1.5"><span class="bg-emerald-600 text-white font-mono text-xs font-bold px-2.5 py-1 rounded-lg">TP11 - TP14</span></div>
+                </div>
+            `;
+        }
+
+        let appState = {
+            role: "guest",
+            mainPage: "beranda",
+            activeTab: "dashboard",
+            jenjang: "7",
+            kelas: "7A",
+            tpIndex: 0,
+            studentsData: {},
+            studentAnswers: {},
+            guruData: {
+                "7A": { nama: "Oktina Laili Hidayah, S.Pd.", nip: "19920514 201903 2 011" },
+                "7B": { nama: "Oktina Laili Hidayah, S.Pd.", nip: "19920514 201903 2 011" },
+                "8A": { nama: "Siti Aminah, S.Pd., M.Pd.", nip: "19880817 201502 2 004" },
+                "9A": { nama: "Drs. Bambang Sutrisno", nip: "19750321 200501 1 008" }
+            },
+            kepsekData: {
+                nama: "Ahmad Mutasir, S.Pd.",
+                nip: "19721105 199802 1 003"
+            },
+            activeQuiz: {
+                student: null,
+                jenjang: "7",
+                tpIndex: 0,
+                currentQIndex: 0,
+                userAnswers: {},
+                shuffledQuestions: [],
+                shuffledOptionsMap: {}
+            }
+        };
+
+        window.onload = function() {
+            initializeStructuredPrograms();
+            generateAllStudentData();
+            handleJenjangChange();
+            renderBerandaDirectory();
+            openRoleModal();
+        };
+
+        function shuffleArrayWithSeed(array, seedNum) {
+            const arr = [...array];
+            let currentIndex = arr.length, temporaryValue, randomIndex;
+            let seed = seedNum;
+            while (currentIndex !== 0) {
+                seed = (seed * 9301 + 49297) % 233280;
+                randomIndex = Math.floor((seed / 233280) * currentIndex);
+                currentIndex -= 1;
+                temporaryValue = arr[currentIndex];
+                arr[currentIndex] = arr[randomIndex];
+                arr[randomIndex] = temporaryValue;
+            }
+            return arr;
+        }
+
+        function startStudentQuiz(student, jenjang, tpIndex) {
+            const tpObj = tpDatabase[jenjang][tpIndex];
+            const seedVal = student.id + (tpIndex + 1) * 17;
+            const shuffledQ = shuffleArrayWithSeed(tpObj.questions, seedVal);
+
+            const optionsMap = {};
+            shuffledQ.forEach(q => {
+                const originalKeys = ["A", "B", "C", "D"];
+                const shuffledKeys = shuffleArrayWithSeed(originalKeys, seedVal + q.id);
+                optionsMap[q.id] = { shuffledKeys: shuffledKeys };
+            });
+
+            appState.activeQuiz = {
+                student: student,
+                jenjang: jenjang,
+                tpIndex: tpIndex,
+                currentQIndex: 0,
+                userAnswers: {},
+                shuffledQuestions: shuffledQ,
+                shuffledOptionsMap: optionsMap
+            };
+
+            document.getElementById('asesmenNotLoggedIn').classList.add('hidden');
+            document.getElementById('asesmenResultContainer').classList.add('hidden');
+            document.getElementById('asesmenQuizContainer').classList.remove('hidden');
+
+            document.getElementById('quizKodeBadge').innerText = `KODE: ${tpObj.id}`;
+            document.getElementById('quizMateriTitle').innerText = tpObj.title;
+            document.getElementById('quizStudentName').innerText = student.name;
+            document.getElementById('quizStudentNIS').innerText = student.nisn;
+            document.getElementById('quizStudentClass').innerText = student.kelas;
+
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            const { jenjang, tpIndex, currentQIndex, userAnswers, shuffledQuestions, shuffledOptionsMap } = appState.activeQuiz;
+            const tpObj = tpDatabase[jenjang][tpIndex];
+            const questions = shuffledQuestions;
+            const q = questions[currentQIndex];
+
+            document.getElementById('quizProgressText').innerText = `Soal ${currentQIndex + 1} dari ${questions.length}`;
+            document.getElementById('quizCurrentNumberBadge').innerText = `Pertanyaan No. ${currentQIndex + 1}`;
+            document.getElementById('quizCurrentWeightBadge').innerText = `Bobot: ${q.weight} Poin`;
+            document.getElementById('quizQuestionText').innerText = q.text;
+
+            const pillsContainer = document.getElementById('quizNumberPills');
+            pillsContainer.innerHTML = questions.map((item, idx) => {
+                const isAnswered = Boolean(userAnswers[item.id]);
+                const isCurrent = idx === currentQIndex;
+                let pillClass = "bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200";
+                if (isCurrent) pillClass = "bg-indigo-600 text-white border-indigo-600 ring-2 ring-indigo-200";
+                else if (isAnswered) pillClass = "bg-emerald-100 text-emerald-800 border-emerald-300";
+
+                return `<button onclick="jumpToQuizQuestion(${idx})" class="w-9 h-9 rounded-lg border font-bold text-xs transition ${pillClass}">${idx + 1}</button>`;
+            }).join('');
+
+            const optContainer = document.getElementById('quizOptionsContainer');
+            const selectedOriginalKey = userAnswers[q.id];
+            const mapData = shuffledOptionsMap[q.id];
+            const displayKeys = ["A", "B", "C", "D"];
+
+            optContainer.innerHTML = mapData.shuffledKeys.map((origKey, displayIdx) => {
+                const displayLabel = displayKeys[displayIdx];
+                const isSelected = selectedOriginalKey === origKey;
+                return `
+                    <button type="button" onclick="selectQuizOption(${q.id}, '${origKey}')" class="w-full text-left p-4 rounded-2xl border-2 transition flex items-center gap-3.5 ${isSelected ? 'border-indigo-600 bg-indigo-50/70 shadow-sm' : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50'}">
+                        <span class="w-8 h-8 rounded-xl flex items-center justify-center font-extrabold text-xs shrink-0 ${isSelected ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700'}">${displayLabel}</span>
+                        <span class="text-sm font-medium text-slate-800">${q.options[origKey]}</span>
+                    </button>
+                `;
+            }).join('');
+
+            document.getElementById('btnQuizPrev').disabled = currentQIndex === 0;
+            const isLast = currentQIndex === questions.length - 1;
+            document.getElementById('btnQuizNext').classList.toggle('hidden', isLast);
+            document.getElementById('btnQuizFinish').classList.toggle('hidden', !isLast);
+        }
+
+        function selectQuizOption(questionId, originalOptionKey) {
+            appState.activeQuiz.userAnswers[questionId] = originalOptionKey;
+            renderQuizQuestion();
+        }
+
+        function jumpToQuizQuestion(index) {
+            appState.activeQuiz.currentQIndex = index;
+            renderQuizQuestion();
+        }
+
+        function prevQuizQuestion() {
+            if (appState.activeQuiz.currentQIndex > 0) {
+                appState.activeQuiz.currentQIndex--;
+                renderQuizQuestion();
+            }
+        }
+
+        function nextQuizQuestion() {
+            const { shuffledQuestions, currentQIndex } = appState.activeQuiz;
+            if (currentQIndex < shuffledQuestions.length - 1) {
+                appState.activeQuiz.currentQIndex++;
+                renderQuizQuestion();
+            }
+        }
+
+        function retakeCurrentQuiz() {
+            const { student, jenjang, tpIndex } = appState.activeQuiz;
+            if (student) startStudentQuiz(student, jenjang, tpIndex);
+        }
+
+        function finishQuiz() {
+            const { student, jenjang, tpIndex, userAnswers } = appState.activeQuiz;
+            const tpObj = tpDatabase[jenjang][tpIndex];
+            const questions = tpObj.questions;
+
+            const classKey = `${student.kelas}-${tpObj.id}`;
+            if (!appState.studentAnswers[classKey]) appState.studentAnswers[classKey] = [];
+            const existingIdx = appState.studentAnswers[classKey].findIndex(a => a.studentId === student.id);
+            if (existingIdx >= 0) {
+                appState.studentAnswers[classKey][existingIdx].answers = { ...userAnswers };
+            } else {
+                appState.studentAnswers[classKey].push({ studentId: student.id, answers: { ...userAnswers } });
+            }
+
+            appState.jenjang = jenjang;
+            appState.kelas = student.kelas;
+            appState.tpIndex = tpIndex;
+
+            let totalScore = 0;
+            let correctCount = 0;
+            questions.forEach(q => {
+                if (userAnswers[q.id] === q.keys) {
+                    totalScore += q.weight;
+                    correctCount++;
+                }
+            });
+
+            const wrongCount = questions.length - correctCount;
+            const isTuntas = totalScore >= tpObj.kkm;
+
+            document.getElementById('asesmenQuizContainer').classList.add('hidden');
+            document.getElementById('asesmenResultContainer').classList.remove('hidden');
+
+            const banner = document.getElementById('resultBannerHeader');
+            banner.className = isTuntas ? "bg-emerald-600 text-white p-6 sm:p-8 text-center" : "bg-rose-600 text-white p-6 sm:p-8 text-center";
+
+            document.getElementById('resultStudentName').innerText = student.name;
+            document.getElementById('resultMetaInfo').innerText = `Kelas ${student.kelas} • NIS: ${student.nisn} • ${tpObj.title}`;
+            document.getElementById('resultScoreValue').innerText = totalScore;
+            document.getElementById('resultScoreValue').className = `text-5xl font-black my-1 ${isTuntas ? 'text-emerald-600' : 'text-rose-600'}`;
+
+            const statusBadge = document.getElementById('resultStatusBadge');
+            statusBadge.innerText = isTuntas ? `TUNTAS (≥ KKM ${tpObj.kkm})` : `PERLU REMEDIAL (< KKM ${tpObj.kkm})`;
+            statusBadge.className = `text-xs font-extrabold px-3 py-1 rounded-full ${isTuntas ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}`;
+
+            document.getElementById('resultTotalQuestions').innerText = questions.length;
+            document.getElementById('resultCorrectCount').innerText = correctCount;
+            document.getElementById('resultWrongCount').innerText = wrongCount;
+
+            const programBox = document.getElementById("resultProgramBox");
+            const programList = isTuntas ? (tpObj.pengayaanPrograms || []) : (tpObj.remedialPrograms || []);
+            const matchedProgram = getMatchedProgramForScore(tpObj, totalScore) || programList[0];
+            const matchedIdx = Math.max(0, programList.findIndex(p => matchedProgram && p.min === matchedProgram.min && p.max === matchedProgram.max));
+
+            if (matchedProgram) {
+                const themeColor = isTuntas ? "emerald" : "rose";
+                const iconClass = isTuntas ? "fa-rocket" : "fa-kit-medical";
+                const categoryTitle = isTuntas ? "Rekomendasi Program Pengayaan Anda" : "Rekomendasi Program Remedial Anda";
+
+                programBox.className = `rounded-2xl p-5 sm:p-6 border border-${themeColor}-200 bg-${themeColor}-50/70`;
+                programBox.innerHTML = `
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 rounded-xl bg-${themeColor}-600 text-white flex items-center justify-center text-lg shrink-0 shadow-sm">
+                                <i class="fa-solid ${iconClass}"></i>
+                            </div>
+                            <div>
+                                <span class="inline-block bg-${themeColor}-100 text-${themeColor}-800 font-extrabold px-2.5 py-0.5 rounded-full text-[11px] mb-1">
+                                    ${matchedProgram.rangeLabel}
+                                </span>
+                                <h4 class="font-bold text-${themeColor}-950 text-base">${categoryTitle}</h4>
+                            </div>
+                        </div>
+                        <span class="bg-amber-100 text-amber-900 border border-amber-300 text-xs font-extrabold px-3 py-1.5 rounded-xl shrink-0">
+                            <i class="fa-solid fa-calendar-week mr-1"></i> Durasi: 1 Minggu
+                        </span>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border-2 border-${themeColor}-400 p-4 sm:p-5 shadow-sm">
+                        <div class="flex flex-wrap items-start justify-between gap-3 pb-3 mb-3 border-b border-slate-100">
+                            <div>
+                                <h5 class="font-extrabold text-slate-900 text-sm sm:text-base">${matchedProgram.title}</h5>
+                                <p class="text-xs text-slate-600 mt-1">${matchedProgram.summary}</p>
+                            </div>
+                            <button type="button" onclick="openProgramDetailModal('${isTuntas ? 'pengayaan' : 'remedial'}', ${matchedIdx}, '${appState.activeQuiz.jenjang}', ${appState.activeQuiz.tpIndex})" class="shrink-0 bg-${themeColor}-600 hover:bg-${themeColor}-700 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition flex items-center gap-1.5 shadow-sm">
+                                <i class="fa-solid fa-up-right-from-square"></i> Panduan Lengkap
+                            </button>
+                        </div>
+                        <div class="space-y-2">
+                            ${(matchedProgram.steps || []).map((step, sIdx) => `
+                                <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-${themeColor}-50/50 border border-${themeColor}-100 text-xs text-slate-800">
+                                    <span class="w-5 h-5 rounded-full bg-${themeColor}-600 text-white font-extrabold text-[11px] flex items-center justify-center shrink-0 mt-0.5">${sIdx + 1}</span>
+                                    <span class="leading-relaxed">${step}</span>
+                                </div>
+                            `).join("")}
+                        </div>
+                    </div>
+                `;
+            }
+
+            const key = `${student.kelas}-${tpObj.id}`;
+            const classAnswers = appState.studentAnswers[key] || [];
+            const totalClassStudents = (appState.studentsData[student.kelas] || []).length;
+            const breakdownContainer = document.getElementById("resultItemBreakdown");
+
+            breakdownContainer.innerHTML = questions.map((q, idx) => {
+                const chosen = userAnswers[q.id];
+                const isCorrect = chosen === q.keys;
+                let classCorrect = 0;
+                classAnswers.forEach(entry => {
+                    if (entry.answers[q.id] === q.keys) classCorrect++;
+                });
+                const P = totalClassStudents > 0 ? (classCorrect / totalClassStudents) : 0;
+                let pCategory = P > 0.70 ? "Mudah" : P < 0.30 ? "Sukar" : "Sedang";
+
+                return `
+                    <div class="p-4 rounded-2xl border ${isCorrect ? 'border-emerald-200 bg-emerald-50/30' : 'border-rose-200 bg-rose-50/30'}">
+                        <div class="flex flex-wrap justify-between items-center gap-2 mb-2">
+                            <span class="text-xs font-bold text-slate-800">Butir Soal No. ${idx + 1}</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-[11px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-medium">P (Kesukaran): <strong>${P.toFixed(2)} (${pCategory})</strong></span>
+                                ${isCorrect ? `<span class="text-xs font-bold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full">Benar</span>` : `<span class="text-xs font-bold bg-rose-100 text-rose-800 px-2.5 py-0.5 rounded-full">Salah</span>`}
+                            </div>
+                        </div>
+                        <p class="text-sm font-medium text-slate-800 mb-3">${q.text}</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                            <div class="p-2.5 rounded-xl border ${isCorrect ? 'bg-emerald-100/70 border-emerald-300 text-emerald-950' : 'bg-rose-100/70 border-rose-300 text-rose-950'}">
+                                <span class="font-bold block mb-0.5">Jawaban Anda:</span> ${chosen ? `${chosen}. ${q.options[chosen]}` : '<em>Tidak dijawab</em>'}
+                            </div>
+                            <div class="p-2.5 rounded-xl border bg-white border-slate-200 text-slate-800">
+                                <span class="font-bold text-indigo-700 block mb-0.5">Kunci Jawaban Benar:</span> ${q.keys}. ${q.options[q.keys]}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function switchTab(tabName) {
+            appState.activeTab = tabName;
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white', 'shadow');
+                btn.classList.add('text-slate-600', 'hover:bg-slate-100');
+            });
+
+            const lblPrintTab = document.getElementById('lblCurrentTabPrint');
+
+            if (tabName === 'dashboard') {
+                document.getElementById('viewDashboard').classList.remove('hidden');
+                document.getElementById('tabBtnDashboard').classList.add('bg-indigo-600', 'text-white', 'shadow');
+                lblPrintTab.innerText = "Ringkasan & Hasil";
+            } else if (tabName === 'tindakLanjut') {
+                document.getElementById('viewTindakLanjut').classList.remove('hidden');
+                document.getElementById('tabBtnTindakLanjut').classList.add('bg-indigo-600', 'text-white', 'shadow');
+                lblPrintTab.innerText = "Rencana Tindak Lanjut";
+                renderTindakLanjutTab();
+            } else if (tabName === 'inputMurid') {
+                document.getElementById('viewInputMurid').classList.remove('hidden');
+                document.getElementById('tabBtnMurid').classList.add('bg-indigo-600', 'text-white', 'shadow');
+                lblPrintTab.innerText = "Data Peserta Didik";
+                renderStudentManagementTable();
+            } else if (tabName === 'inputGuru') {
+                document.getElementById('viewInputGuru').classList.remove('hidden');
+                document.getElementById('tabBtnGuru').classList.add('bg-indigo-600', 'text-white', 'shadow');
+                lblPrintTab.innerText = "Guru & Kepala Sekolah";
+                loadGuruTabValues();
+            } else if (tabName === 'soal') {
+                document.getElementById('viewSoal').classList.remove('hidden');
+                document.getElementById('tabBtnSoal').classList.add('bg-indigo-600', 'text-white', 'shadow');
+                lblPrintTab.innerText = "Soal Asesmen";
+                renderQuestionBank();
+            } else if (tabName === 'butirSoal') {
+                document.getElementById('viewButirSoal').classList.remove('hidden');
+                document.getElementById('tabBtnButirSoal').classList.add('bg-indigo-600', 'text-white', 'shadow');
+                lblPrintTab.innerText = "Analisis Butir Soal";
+                renderItemAnalysis();
+            }
+        }
+
+        function handleJenjangChange() {
+            appState.jenjang = document.getElementById("selectJenjang").value;
+            const kelasSelect = document.getElementById("selectKelas");
+            kelasSelect.innerHTML = "";
+            [`${appState.jenjang}A`, `${appState.jenjang}B`, `${appState.jenjang}C`, `${appState.jenjang}D`].forEach(cls => {
+                const opt = document.createElement("option");
+                opt.value = cls;
+                opt.textContent = `Kelas ${cls.charAt(0)} ${cls.charAt(1)}`;
+                kelasSelect.appendChild(opt);
+            });
+            appState.kelas = `${appState.jenjang}A`;
+
+            const tpSelect = document.getElementById("selectTP");
+            tpSelect.innerHTML = "";
+            (tpDatabase[appState.jenjang] || []).forEach((tp, idx) => {
+                const opt = document.createElement("option");
+                opt.value = idx;
+                opt.textContent = `${tp.title}`;
+                tpSelect.appendChild(opt);
+            });
+            appState.tpIndex = 0;
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            appState.kelas = document.getElementById("selectKelas").value;
+            appState.tpIndex = parseInt(document.getElementById("selectTP").value) || 0;
+
+            const tps = tpDatabase[appState.jenjang] || [];
+            const currentTPObj = tps[appState.tpIndex] || { id: "TP1", title: "N/A", kkm: 75 };
+
+            document.getElementById("headerTitle").innerText = `Analisis Asesmen Sumatif IPA Kelas ${appState.kelas}`;
+            document.getElementById("headerSub").innerText = `${currentTPObj.title} • Kode: ${currentTPObj.id} • KKM: ${currentTPObj.kkm}`;
+            document.getElementById("statKKMInfo").innerText = `KKM Modul: ${currentTPObj.kkm}`;
+            document.getElementById("lblTargetKelas").innerText = appState.kelas;
+            document.getElementById("lblDataKelasTitle").innerText = appState.kelas;
+            document.getElementById("lblSoalTPTitle").innerText = currentTPObj.title;
+            document.getElementById("lblSoalTPCode").innerText = currentTPObj.id;
+
+            document.querySelectorAll('.lblKelasText').forEach(el => el.innerText = appState.kelas);
+            document.querySelectorAll('.lblKkmValue').forEach(el => el.innerText = currentTPObj.kkm);
+
+            updateHeaderGuruDisplay();
+            calculateStatsAndRender();
+
+            if (appState.activeTab === 'tindakLanjut') renderTindakLanjutTab();
+            if (appState.activeTab === 'inputMurid') renderStudentManagementTable();
+            if (appState.activeTab === 'inputGuru') loadGuruTabValues();
+            if (appState.activeTab === 'soal') renderQuestionBank();
+            if (appState.activeTab === 'butirSoal') renderItemAnalysis();
+        }
+
+        function updateHeaderGuruDisplay() {
+            const g = appState.guruData[appState.kelas] || { nama: "Oktina Laili Hidayah, S.Pd.", nip: "-" };
+            const k = appState.kepsekData;
+            document.getElementById("hdrNamaGuru").innerText = g.nama;
+            document.getElementById("hdrNamaKepsek").innerText = k.nama;
+            document.getElementById("printNamaGuru").innerText = g.nama;
+            document.getElementById("printNipGuru").innerText = g.nip ? `NIP. ${g.nip}` : "NIP. -";
+            document.getElementById("printNamaKepsek").innerText = k.nama;
+            document.getElementById("printNipKepsek").innerText = k.nip ? `NIP. ${k.nip}` : "NIP. -";
+        }
+
+        function calculateStudentScore(studentId) {
+            const tps = tpDatabase[appState.jenjang] || [];
+            const tpObj = tps[appState.tpIndex];
+            if (!tpObj) return 0;
+            const key = `${appState.kelas}-${tpObj.id}`;
+            const studentAnswersList = appState.studentAnswers[key] || [];
+            const studentEntry = studentAnswersList.find(a => a.studentId === studentId);
+            if (!studentEntry) return 0;
+
+            let totalScore = 0;
+            tpObj.questions.forEach(q => {
+                if (studentEntry.answers[q.id] === q.keys) totalScore += q.weight;
+            });
+            return totalScore;
+        }
+
+        function calculateStatsAndRender() {
+            const tps = tpDatabase[appState.jenjang] || [];
+            const currentTPObj = tps[appState.tpIndex];
+            if (!currentTPObj) return;
+
+            const studentList = appState.studentsData[appState.kelas] || [];
+            const kkm = currentTPObj.kkm;
+
+            let totalClassScore = 0;
+            let tuntasCount = 0;
+            let remedialCount = 0;
+
+            studentList.forEach(s => {
+                const score = calculateStudentScore(s.id);
+                totalClassScore += score;
+                if (score >= kkm) tuntasCount++;
+                else remedialCount++;
+            });
+
+            const avg = studentList.length > 0 ? (totalClassScore / studentList.length).toFixed(1) : 0;
+            const tuntasPct = studentList.length > 0 ? Math.round((tuntasCount / studentList.length) * 100) : 0;
+            const remedialPct = studentList.length > 0 ? Math.round((remedialCount / studentList.length) * 100) : 0;
+
+            document.getElementById("statTotalMurid").innerText = studentList.length;
+            document.getElementById("statRataRata").innerText = avg;
+            document.getElementById("statTuntas").innerHTML = `${tuntasCount} <span class="text-xs font-normal text-emerald-500">(${tuntasPct}%)</span>`;
+            document.getElementById("statRemedial").innerHTML = `${remedialCount} <span class="text-xs font-normal text-rose-500">(${remedialPct}%)</span>`;
+
+            renderTable();
+        }
+
+        function renderTable() {
+            const tps = tpDatabase[appState.jenjang] || [];
+            const currentTPObj = tps[appState.tpIndex];
+            if (!currentTPObj) return;
+
+            const studentList = appState.studentsData[appState.kelas] || [];
+            const kkm = currentTPObj.kkm;
+            const searchQuery = document.getElementById("inputSearch").value.toLowerCase();
+            const tbody = document.getElementById("studentTableBody");
+            tbody.innerHTML = "";
+
+            const filteredList = studentList.filter(s => s.name.toLowerCase().includes(searchQuery));
+            if (filteredList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-6 text-slate-400">Tidak ada data murid.</td></tr>`;
+                return;
+            }
+
+            filteredList.forEach((s, index) => {
+                const score = calculateStudentScore(s.id);
+                const isTuntas = score >= kkm;
+                const matchedProg = getMatchedProgramForScore(currentTPObj, score);
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-slate-50 transition duration-150";
+
+                const recommendationText = isTuntas 
+                    ? `<span class="text-emerald-700 font-medium"><i class="fa-solid fa-square-check text-emerald-500 mr-1 no-print"></i> ${matchedProg ? matchedProg.rangeLabel : 'Pengayaan'}: ${matchedProg ? matchedProg.title : 'Proyek'} (1 Minggu)</span>`
+                    : `<span class="text-rose-700 font-medium"><i class="fa-solid fa-triangle-exclamation text-rose-500 mr-1 no-print"></i> ${matchedProg ? matchedProg.rangeLabel : 'Remedial'}: ${matchedProg ? matchedProg.title : 'Bimbingan'} (1 Minggu)</span>`;
+
+                tr.innerHTML = `
+                    <td class="py-3 px-4 text-center font-medium text-slate-400">${index + 1}</td>
+                    <td class="py-3 px-4 font-semibold text-slate-800">${s.name}</td>
+                    <td class="py-3 px-4 text-center font-mono text-xs text-slate-500">${s.nisn}</td>
+                    <td class="py-3 px-4 text-center font-bold ${isTuntas ? 'text-emerald-600' : 'text-rose-600'} text-base">${score}</td>
+                    <td class="py-3 px-4 text-center">
+                        ${isTuntas ? `<span class="inline-block bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-0.5 rounded-full">TUNTAS</span>` : `<span class="inline-block bg-rose-100 text-rose-800 text-xs font-bold px-2.5 py-0.5 rounded-full">REMEDIAL</span>`}
+                    </td>
+                    <td class="py-3 px-4 text-xs">${recommendationText}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderTindakLanjutTab() {
+            const tps = tpDatabase[appState.jenjang] || [];
+            const tpObj = tps[appState.tpIndex];
+            if (!tpObj) return;
+
+            const studentList = appState.studentsData[appState.kelas] || [];
+            const kkm = tpObj.kkm;
+
+            const remBox = document.getElementById("remedialStrategyEditorList");
+            remBox.innerHTML = (tpObj.remedialPrograms || []).map((item, idx) => `
+                <div onclick="openProgramDetailModal('remedial', ${idx})" class="cursor-pointer group flex items-start justify-between gap-2 p-3 bg-white rounded-xl border border-rose-200 hover:border-rose-400 shadow-sm transition">
+                    <div class="space-y-1">
+                        <div class="flex flex-wrap items-center gap-1.5">
+                            <span class="inline-block bg-rose-600 text-white font-bold px-2 py-0.5 rounded text-[11px]">${item.rangeLabel}</span>
+                            <span class="inline-block bg-amber-100 text-amber-800 font-semibold px-2 py-0.5 rounded text-[10px]"><i class="fa-solid fa-clock mr-1"></i>1 Minggu</span>
+                        </div>
+                        <div class="font-bold text-slate-900 group-hover:text-rose-700 transition">${item.title}</div>
+                        <div class="text-slate-600 text-[11px]">${item.summary}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            const pengBox = document.getElementById("pengayaanStrategyEditorList");
+            pengBox.innerHTML = (tpObj.pengayaanPrograms || []).map((item, idx) => `
+                <div onclick="openProgramDetailModal('pengayaan', ${idx})" class="cursor-pointer group flex items-start justify-between gap-2 p-3 bg-white rounded-xl border border-emerald-200 hover:border-emerald-400 shadow-sm transition">
+                    <div class="space-y-1">
+                        <div class="flex flex-wrap items-center gap-1.5">
+                            <span class="inline-block bg-emerald-600 text-white font-bold px-2 py-0.5 rounded text-[11px]">${item.rangeLabel}</span>
+                            <span class="inline-block bg-amber-100 text-amber-800 font-semibold px-2 py-0.5 rounded text-[10px]"><i class="fa-solid fa-clock mr-1"></i>1 Minggu</span>
+                        </div>
+                        <div class="font-bold text-slate-900 group-hover:text-emerald-700 transition">${item.title}</div>
+                        <div class="text-slate-600 text-[11px]">${item.summary}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            const remTableBody = document.getElementById("tableRemedialStudents");
+            const pengTableBody = document.getElementById("tablePengayaanStudents");
+            remTableBody.innerHTML = "";
+            pengTableBody.innerHTML = "";
+
+            let remCount = 0, pengCount = 0;
+
+            studentList.forEach(s => {
+                const score = calculateStudentScore(s.id);
+                const matchedProg = getMatchedProgramForScore(tpObj, score);
+                if (score < kkm) {
+                    remCount++;
+                    const progIdx = (tpObj.remedialPrograms || []).indexOf(matchedProg);
+                    const tr = document.createElement("tr");
+                    tr.className = "hover:bg-slate-50";
+                    tr.innerHTML = `
+                        <td class="py-2.5 px-3 text-center text-slate-400 font-medium">${remCount}</td>
+                        <td class="py-2.5 px-3 font-semibold text-slate-800">${s.name}</td>
+                        <td class="py-2.5 px-3 text-center font-bold text-rose-600">${score}</td>
+                        <td class="py-2.5 px-3">
+                            <button onclick="openProgramDetailModal('remedial', ${Math.max(0, progIdx)})" class="text-left group">
+                                <span class="inline-block bg-rose-100 text-rose-800 font-bold px-1.5 py-0.5 rounded text-[10px] mb-0.5">${matchedProg ? matchedProg.rangeLabel : '0-74'}</span>
+                                <span class="block text-slate-700 font-medium group-hover:text-rose-700 underline decoration-dotted">${matchedProg ? matchedProg.title : 'Remedial'} (1 Minggu)</span>
+                            </button>
+                        </td>
+                    `;
+                    remTableBody.appendChild(tr);
+                } else {
+                    pengCount++;
+                    const progIdx = (tpObj.pengayaanPrograms || []).indexOf(matchedProg);
+                    const tr = document.createElement("tr");
+                    tr.className = "hover:bg-slate-50";
+                    tr.innerHTML = `
+                        <td class="py-2.5 px-3 text-center text-slate-400 font-medium">${pengCount}</td>
+                        <td class="py-2.5 px-3 font-semibold text-slate-800">${s.name}</td>
+                        <td class="py-2.5 px-3 text-center font-bold text-emerald-600">${score}</td>
+                        <td class="py-2.5 px-3">
+                            <button onclick="openProgramDetailModal('pengayaan', ${Math.max(0, progIdx)})" class="text-left group">
+                                <span class="inline-block bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded text-[10px] mb-0.5">${matchedProg ? matchedProg.rangeLabel : '75-100'}</span>
+                                <span class="block text-slate-700 font-medium group-hover:text-emerald-700 underline decoration-dotted">${matchedProg ? matchedProg.title : 'Pengayaan'} (1 Minggu)</span>
+                            </button>
+                        </td>
+                    `;
+                    pengTableBody.appendChild(tr);
+                }
+            });
+
+            document.getElementById("lblRemedialCountBadge").innerText = `${remCount} Siswa`;
+            document.getElementById("lblPengayaanCountBadge").innerText = `${pengCount} Siswa`;
+        }
+
+        function openProgramDetailModal(type, index, jenjangOverride = null, tpIdxOverride = null) {
+            const j = jenjangOverride || appState.jenjang;
+            const tIdx = tpIdxOverride !== null ? tpIdxOverride : appState.tpIndex;
+            const tpObj = (tpDatabase[j] || [])[tIdx];
+            if (!tpObj) return;
+
+            const list = type === 'remedial' ? (tpObj.remedialPrograms || []) : (tpObj.pengayaanPrograms || []);
+            const prog = list[index];
+            if (!prog) return;
+
+            const header = document.getElementById("detailModalHeader");
+            header.className = type === 'remedial' ? "bg-rose-700 text-white p-6 flex justify-between items-start gap-4" : "bg-emerald-700 text-white p-6 flex justify-between items-start gap-4";
+
+            document.getElementById("detailModalBadge").innerText = prog.rangeLabel;
+            document.getElementById("detailModalTitle").innerText = prog.title;
+            document.getElementById("detailModalSub").innerText = `${tpObj.title} • Modul BERMUTU 2011`;
+            document.getElementById("detailModalDeadline").innerText = `Durasi Pelaksanaan: ${prog.deadline}`;
+
+            document.getElementById("detailModalStepsList").innerHTML = (prog.steps || []).map((step, sIdx) => `
+                <div class="flex items-start gap-3 p-3 rounded-xl border ${type === 'remedial' ? 'bg-rose-50/40 border-rose-100' : 'bg-emerald-50/40 border-emerald-100'}">
+                    <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-extrabold shrink-0 mt-0.5 ${type === 'remedial' ? 'bg-rose-600 text-white' : 'bg-emerald-600 text-white'}">${sIdx + 1}</span>
+                    <p class="text-xs text-slate-800 leading-relaxed">${step}</p>
+                </div>
+            `).join('');
+
+            document.getElementById("programDetailModal").classList.remove("hidden");
+        }
+
+        function closeProgramDetailModal() {
+            document.getElementById("programDetailModal").classList.add("hidden");
+        }
+
+        function openStrategyModal(type, index = -1) {
+            document.getElementById("modalStrategyType").value = type;
+            document.getElementById("modalStrategyIndex").value = index;
+            document.getElementById("strategyModal").classList.remove("hidden");
+        }
+
+        function closeStrategyModal() {
+            document.getElementById("strategyModal").classList.add("hidden");
+        }
+
+        function handleSaveStrategy(e) {
+            e.preventDefault();
+            closeStrategyModal();
+            renderTindakLanjutTab();
+        }
+
+        function renderStudentManagementTable() {
+            const list = appState.studentsData[appState.kelas] || [];
+            const tbody = document.getElementById("studentManagementTableBody");
+            if (!tbody) return;
+            tbody.innerHTML = list.map((s, idx) => `
+                <tr class="hover:bg-slate-50">
+                    <td class="py-2.5 px-4 text-center text-slate-400 font-medium">${idx + 1}</td>
+                    <td class="py-2.5 px-4 font-mono text-slate-600">${s.nisn}</td>
+                    <td class="py-2.5 px-4 font-semibold text-slate-800">${s.name}</td>
+                    <td class="py-2.5 px-4 text-center font-bold text-indigo-700">${s.kelas}</td>
+                    <td class="py-2.5 px-4 text-center no-print">
+                        <button onclick="deleteStudent(${s.id})" class="text-rose-600 hover:text-rose-800 bg-rose-50 px-2.5 py-1 rounded font-semibold"><i class="fa-solid fa-trash mr-1"></i> Hapus</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function handleAddStudent(e) {
+            e.preventDefault();
+            const nis = document.getElementById("newStudentNIS").value.trim();
+            const name = document.getElementById("newStudentName").value.trim();
+            if (!nis || !name) return;
+
+            const list = appState.studentsData[appState.kelas] || [];
+            const newId = Date.now();
+            list.push({ id: newId, nisn: nis, name: name, kelas: appState.kelas });
+            appState.studentsData[appState.kelas] = list;
+
+            document.getElementById("newStudentNIS").value = "";
+            document.getElementById("newStudentName").value = "";
+            renderStudentManagementTable();
+            calculateStatsAndRender();
+        }
+
+        function deleteStudent(id) {
+            appState.studentsData[appState.kelas] = (appState.studentsData[appState.kelas] || []).filter(s => s.id !== id);
+            renderStudentManagementTable();
+            calculateStatsAndRender();
+        }
+
+        function loadGuruTabValues() {
+            const g = appState.guruData[appState.kelas] || { nama: "Oktina Laili Hidayah, S.Pd.", nip: "-" };
+            const k = appState.kepsekData;
+            document.getElementById("inputNamaGuru").value = g.nama;
+            document.getElementById("inputNipGuru").value = g.nip;
+            document.getElementById("inputNamaKepsek").value = k.nama;
+            document.getElementById("inputNipKepsek").value = k.nip;
+        }
+
+        function handleSaveGuruKepsek(e) {
+            e.preventDefault();
+            appState.guruData[appState.kelas] = {
+                nama: document.getElementById("inputNamaGuru").value.trim(),
+                nip: document.getElementById("inputNipGuru").value.trim()
+            };
+            appState.kepsekData = {
+                nama: document.getElementById("inputNamaKepsek").value.trim(),
+                nip: document.getElementById("inputNipKepsek").value.trim()
+            };
+            updateHeaderGuruDisplay();
+            const fb = document.getElementById("guruSaveFeedback");
+            fb.classList.remove("hidden");
+            setTimeout(() => fb.classList.add("hidden"), 3000);
+        }
+
+        function renderQuestionBank() {
+            const tps = tpDatabase[appState.jenjang] || [];
+            const tpObj = tps[appState.tpIndex];
+            const container = document.getElementById("questionListContainer");
+            container.innerHTML = "";
+
+            if (!tpObj || !tpObj.questions.length) {
+                container.innerHTML = `<p class="text-center text-slate-400 py-6">Belum ada butir soal.</p>`;
+                return;
+            }
+
+            tpObj.questions.forEach((q, idx) => {
+                const div = document.createElement("div");
+                div.className = "bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs shadow-sm";
+                div.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-indigo-700 bg-indigo-100 px-2.5 py-1 rounded">Soal No. ${idx + 1} (Bobot: ${q.weight})</span>
+                        <span class="font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Kunci: ${q.keys}</span>
+                    </div>
+                    <p class="font-semibold text-slate-800 text-sm mb-3">${q.text}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-600">
+                        <div class="p-2 rounded ${q.keys === 'A' ? 'bg-emerald-100 font-bold border border-emerald-300' : 'bg-white border'}">A. ${q.options.A}</div>
+                        <div class="p-2 rounded ${q.keys === 'B' ? 'bg-emerald-100 font-bold border border-emerald-300' : 'bg-white border'}">B. ${q.options.B}</div>
+                        <div class="p-2 rounded ${q.keys === 'C' ? 'bg-emerald-100 font-bold border border-emerald-300' : 'bg-white border'}">C. ${q.options.C}</div>
+                        <div class="p-2 rounded ${q.keys === 'D' ? 'bg-emerald-100 font-bold border border-emerald-300' : 'bg-white border'}">D. ${q.options.D}</div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function openQuestionModal(mode, id = null) {
+            document.getElementById("questionModal").classList.remove("hidden");
+        }
+
+        function closeQuestionModal() {
+            document.getElementById("questionModal").classList.add("hidden");
+        }
+
+        function handleSaveQuestion(e) {
+            e.preventDefault();
+            closeQuestionModal();
+            renderQuestionBank();
+        }
+
+        function renderItemAnalysis() {
+            const tps = tpDatabase[appState.jenjang] || [];
+            const tpObj = tps[appState.tpIndex];
+            if (!tpObj) return;
+
+            const key = `${appState.kelas}-${tpObj.id}`;
+            const studentAnswersList = appState.studentAnswers[key] || [];
+            const students = appState.studentsData[appState.kelas] || [];
+
+            const matrixHeaderRow = document.getElementById("matrixHeaderRow");
+            let headerHTML = `<th class="py-3 px-3 text-center w-10">No</th><th class="py-3 px-3 min-w-[150px]">Nama Murid</th>`;
+            tpObj.questions.forEach((q, idx) => { headerHTML += `<th class="py-3 px-3 text-center">Soal ${idx + 1}</th>`; });
+            headerHTML += `<th class="py-3 px-3 text-center font-bold">Total Skor</th><th class="py-3 px-3 text-center">Status</th>`;
+            matrixHeaderRow.innerHTML = headerHTML;
+
+            const matrixBody = document.getElementById("studentAnswerMatrixBody");
+            matrixBody.innerHTML = "";
+
+            students.forEach((s, idx) => {
+                const sAns = studentAnswersList.find(a => a.studentId === s.id) || { answers: {} };
+                const score = calculateStudentScore(s.id);
+                const isTuntas = score >= tpObj.kkm;
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-slate-50";
+
+                let optionsCols = "";
+                tpObj.questions.forEach(q => {
+                    const chosen = sAns.answers[q.id] || "";
+                    const isCorrect = chosen === q.keys;
+                    optionsCols += `
+                        <td class="py-2 px-2 text-center">
+                            <select onchange="updateStudentAnswer('${key}', ${s.id}, ${q.id}, this.value)" class="text-xs font-bold border rounded px-1 py-0.5 ${isCorrect ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : 'bg-rose-100 text-rose-800 border-rose-300'}">
+                                <option value="" ${chosen === '' ? 'selected' : ''}>-</option>
+                                <option value="A" ${chosen === 'A' ? 'selected' : ''}>A</option>
+                                <option value="B" ${chosen === 'B' ? 'selected' : ''}>B</option>
+                                <option value="C" ${chosen === 'C' ? 'selected' : ''}>C</option>
+                                <option value="D" ${chosen === 'D' ? 'selected' : ''}>D</option>
+                            </select>
+                        </td>
+                    `;
+                });
+
+                tr.innerHTML = `
+                    <td class="py-2 px-3 text-center text-slate-400 font-medium">${idx + 1}</td>
+                    <td class="py-2 px-3 font-semibold text-slate-800">${s.name}</td>
+                    ${optionsCols}
+                    <td class="py-2 px-3 text-center font-bold ${isTuntas ? 'text-emerald-600' : 'text-rose-600'}">${score}</td>
+                    <td class="py-2 px-3 text-center"><span class="text-[10px] font-bold px-2 py-0.5 rounded ${isTuntas ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">${isTuntas ? 'TUNTAS' : 'REMEDIAL'}</span></td>
+                `;
+                matrixBody.appendChild(tr);
+            });
+
+            const analysisBody = document.getElementById("analysisItemTableBody");
+            analysisBody.innerHTML = "";
+            const totalStudents = students.length;
+            if (totalStudents === 0) return;
+
+            const sortedStudents = [...students].map(s => ({
+                id: s.id,
+                score: calculateStudentScore(s.id)
+            })).sort((a, b) => b.score - a.score);
+
+            const nGroup = Math.max(1, Math.floor(totalStudents * 0.27));
+            const upperGroup = sortedStudents.slice(0, nGroup);
+            const lowerGroup = sortedStudents.slice(-nGroup);
+
+            tpObj.questions.forEach((q, qIdx) => {
+                let correctTotal = 0, upperCorrect = 0, lowerCorrect = 0;
+                studentAnswersList.forEach(ansEntry => {
+                    if (ansEntry.answers[q.id] === q.keys) {
+                        correctTotal++;
+                        if (upperGroup.some(u => u.id === ansEntry.studentId)) upperCorrect++;
+                        if (lowerGroup.some(l => l.id === ansEntry.studentId)) lowerCorrect++;
+                    }
+                });
+
+                const P = (correctTotal / totalStudents).toFixed(2);
+                let pCat = P > 0.70 ? "Mudah" : P < 0.30 ? "Sukar" : "Sedang";
+                const D = ((upperCorrect - lowerCorrect) / nGroup).toFixed(2);
+                let dCat = D >= 0.40 ? "Sangat Baik" : D >= 0.30 ? "Baik" : D >= 0.20 ? "Cukup" : "Jelek";
+                let statusBadge = D >= 0.30 ? `<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Diterima</span>` : `<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-bold">Direvisi</span>`;
+
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-slate-50";
+                tr.innerHTML = `
+                    <td class="py-2.5 px-3 text-center font-bold">Soal ${qIdx + 1}</td>
+                    <td class="py-2.5 px-3 text-center font-bold text-indigo-600">${q.keys}</td>
+                    <td class="py-2.5 px-3 text-center font-semibold">${correctTotal} / ${totalStudents}</td>
+                    <td class="py-2.5 px-3 text-center font-mono font-bold">${P}</td>
+                    <td class="py-2.5 px-3 text-center"><span class="px-2 py-0.5 rounded bg-slate-100">${pCat}</span></td>
+                    <td class="py-2.5 px-3 text-center font-mono font-bold">${D}</td>
+                    <td class="py-2.5 px-3 text-center">${dCat}</td>
+                    <td class="py-2.5 px-3 text-center">${statusBadge}</td>
+                `;
+                analysisBody.appendChild(tr);
+            });
+        }
+
+        function updateStudentAnswer(key, studentId, questionId, newOption) {
+            const ansList = appState.studentAnswers[key] || [];
+            const entry = ansList.find(a => a.studentId === studentId);
+            if (entry) {
+                entry.answers[questionId] = newOption;
+                renderItemAnalysis();
+                calculateStatsAndRender();
+            }
+        }
+
+        function exportToCSV() {
+            const tps = tpDatabase[appState.jenjang] || [];
+            const currentTPObj = tps[appState.tpIndex];
+            const studentList = appState.studentsData[appState.kelas] || [];
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += `LAPORAN HASIL ASESMEN SUMATIF & ANALISIS BUTIR SOAL (MODUL BERMUTU 2011)\n`;
+            csvContent += `Kelas,${appState.kelas}\n`;
+            csvContent += `Materi,${currentTPObj.title}\n`;
+            csvContent += `KKM,${currentTPObj.kkm}\n\n`;
+            csvContent += `No,Nama Murid,NISN,Nilai Sumatif,Status,Rekomendasi Tindak Lanjut\n`;
+
+            studentList.forEach((s, idx) => {
+                const score = calculateStudentScore(s.id);
+                const status = score >= currentTPObj.kkm ? "Tuntas (Pengayaan)" : "Remedial";
+                const rec = score >= currentTPObj.kkm ? "Pengayaan Proyek 1 Minggu" : "Remedial Terbimbing 1 Minggu";
+                csvContent += `${idx + 1},"${s.name}",'${s.nisn},${score},${status},"${rec}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Analisis_Modul_BERMUTU_${appState.kelas}_${currentTPObj.id}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
