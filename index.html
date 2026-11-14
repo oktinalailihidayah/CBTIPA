@@ -31,7 +31,7 @@
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
     <!-- ===================================================================== -->
-    <!-- POP-UP AWAL: PILIH ROLE USER & MODUL EDUKATIF BERMUTU 2011            -->
+    <!-- POP-UP AWAL: PILIH ROLE USER & VERIFIKASI KODE GURU / NIS SISWA       -->
     <!-- ===================================================================== -->
     <div id="roleSelectionModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[100] flex items-center justify-center p-3 sm:p-4 no-print overflow-y-auto">
         <div class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-xl w-full my-auto overflow-hidden transition-all max-h-[92vh] flex flex-col">
@@ -40,7 +40,7 @@
                 <div class="w-14 h-14 sm:w-16 sm:h-16 bg-indigo-800 rounded-2xl flex items-center justify-center mx-auto mb-2 sm:mb-3 text-amber-400 shadow-inner">
                     <i class="fa-solid fa-graduation-cap text-2xl sm:text-3xl"></i>
                 </div>
-                <h2 class="text-lg sm:text-xl font-extrabold tracking-tight">SIGAP IPA</h2>
+                <h2 class="text-lg sm:text-xl font-extrabold tracking-tight">SIGAP IPA & Modul BERMUTU 2011</h2>
                 <p class="text-xs text-indigo-200 mt-1">Sistem Integrasi Asesmen, Analisis Butir Soal, & Pengolahan Hasil Penilaian</p>
             </div>
 
@@ -54,7 +54,7 @@
                             <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 mt-0.5 font-bold">
                                 <i class="fa-solid fa-book-open"></i>
                             </div>
-                           <div>
+                            <div>
                                 <strong class="font-extrabold block mb-1">Landasan Pedagogik :</strong>
                                 <p class="leading-relaxed text-amber-900">
                                     Berdasarkan Permendiknas No. 16/2007, guru profesional dituntut menguasai analisis tingkat kesukaran ($P$) dan daya beda ($D$) butir soal serta mengelola hasil penilaian untuk program remedial & pengayaan yang terstruktur.
@@ -89,7 +89,7 @@
                     </div>
                 </div>
 
-                <!-- Step 2: Form Verifikasi NIS Siswa -->
+                <!-- Step 2A: Form Verifikasi NIS Siswa -->
                 <div id="roleStepSiswa" class="hidden">
                     <div class="flex items-center justify-between mb-4">
                         <button onclick="backToRoleStep1()" class="text-xs font-semibold text-slate-500 hover:text-indigo-600 flex items-center gap-1">
@@ -133,6 +133,47 @@
                         <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl text-sm shadow-lg shadow-indigo-200 transition flex items-center justify-center gap-2 mt-2">
                             <span>Verifikasi & Mulai CBT Asesmen</span>
                             <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Step 2B: Form Verifikasi Kode Guru -->
+                <div id="roleStepGuru" class="hidden">
+                    <div class="flex items-center justify-between mb-4">
+                        <button onclick="backToRoleStep1()" class="text-xs font-semibold text-slate-500 hover:text-emerald-600 flex items-center gap-1">
+                            <i class="fa-solid fa-arrow-left"></i> Ganti Role
+                        </button>
+                        <span class="bg-emerald-100 text-emerald-800 text-[11px] font-bold px-2.5 py-0.5 rounded-full">Verifikasi Pendidik</span>
+                    </div>
+
+                    <div class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-4 mb-4 text-center">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-xl mx-auto mb-2.5 shadow-sm">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-sm sm:text-base">Otentikasi Akses Guru</h3>
+                        <p class="text-xs text-slate-600 mt-1">Masukkan kode akses guru untuk membuka dasbor analisis butir soal dan pengolahan nilai.</p>
+                    </div>
+
+                    <form onsubmit="handleGuruLoginSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1.5">Masukkan Kode Guru</label>
+                            <div class="relative">
+                                <input type="password" id="loginKodeGuruInput" required placeholder="Ketik kode akses guru..." class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-4 pr-11 py-3 text-center text-lg font-mono font-extrabold tracking-widest text-emerald-950 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                <button type="button" onclick="toggleKodeGuruVisibility()" class="absolute right-3.5 top-3.5 text-slate-400 hover:text-slate-600">
+                                    <i id="kodeGuruEyeIcon" class="fa-solid fa-eye"></i>
+                                </button>
+                            </div>
+                            <p class="text-[11px] text-slate-500 mt-1.5 text-center">Petunjuk Kode Akses Guru: <span class="font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">2026</span></p>
+                        </div>
+
+                        <div id="guruLoginErrorBox" class="hidden bg-rose-50 border border-rose-200 text-rose-700 text-xs p-3 rounded-xl flex items-center gap-2">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <span id="guruLoginErrorMsg">Kode guru salah. Silakan masukkan kode yang benar (2026).</span>
+                        </div>
+
+                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm shadow-lg shadow-emerald-200 transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-unlock-keyhole"></i>
+                            <span>Masuk ke Dasbor Analisis Guru</span>
                         </button>
                     </form>
                 </div>
@@ -197,10 +238,10 @@
                     Membantu guru IPA merancang asesmen berbasis Tujuan Pembelajaran (TP), menghitung Tingkat Kesukaran ($P$) & Daya Beda ($D$) secara otomatis, serta menyusun program tindak lanjut remedial dan pengayaan berdurasi 1 minggu sesuai prinsip *Teaching at the Right Level*.
                 </p>
                 <div class="flex flex-wrap gap-3">
-                    <button onclick="selectRole('siswa'); openRoleModal();" class="bg-white text-indigo-900 hover:bg-indigo-50 font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-lg transition flex items-center gap-2">
+                    <button onclick="openRoleModal(); selectRole('siswa');" class="bg-white text-indigo-900 hover:bg-indigo-50 font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-lg transition flex items-center gap-2">
                         <i class="fa-solid fa-user-graduate text-indigo-600"></i> Masuk Sebagai Siswa (Mulai Ujian CBT)
                     </button>
-                    <button onclick="selectRole('guru')" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-lg transition flex items-center gap-2">
+                    <button onclick="openRoleModal(); selectRole('guru');" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-lg transition flex items-center gap-2">
                         <i class="fa-solid fa-chalkboard-user"></i> Masuk Dasbor Analisis Guru
                     </button>
                 </div>
@@ -273,7 +314,7 @@
             <p class="text-sm text-slate-500 max-w-md mx-auto mb-6">
                 Silakan masukkan NIS dan Kode Asesmen (misal: TP1) untuk mulai mengerjakan soal asesmen sumatif.
             </p>
-            <button onclick="selectRole('siswa'); openRoleModal();" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-6 py-3 rounded-xl shadow transition">
+            <button onclick="openRoleModal(); selectRole('siswa');" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-6 py-3 rounded-xl shadow transition">
                 <i class="fa-solid fa-id-card mr-1.5"></i> Masukkan NIS & Kode Asesmen
             </button>
         </div>
@@ -567,7 +608,6 @@
 
         <!-- TAB: RENCANA TINDAK LANJUT -->
         <div id="viewTindakLanjut" class="tab-content hidden">
-            <!-- Penjelasan Edukatif Modul BERMUTU 2011 -->
             <div class="bg-indigo-900 text-white p-6 rounded-2xl shadow-sm mb-6 flex flex-col md:flex-row items-start md:items-center gap-4">
                 <div class="w-12 h-12 rounded-xl bg-indigo-700 text-amber-400 flex items-center justify-center text-2xl shrink-0">
                     <i class="fa-solid fa-graduation-cap"></i>
@@ -766,7 +806,6 @@
 
         <!-- TAB: ANALISIS BUTIR SOAL & MATRIKS JAWABAN -->
         <div id="viewButirSoal" class="tab-content hidden space-y-6">
-            <!-- Penjelasan Edukatif Rumus P & D -->
             <div class="bg-emerald-900 text-white p-6 rounded-2xl shadow-sm flex flex-col md:flex-row items-start md:items-center gap-4">
                 <div class="w-12 h-12 rounded-xl bg-emerald-700 text-amber-400 flex items-center justify-center text-2xl shrink-0">
                     <i class="fa-solid fa-microscope"></i>
@@ -994,20 +1033,63 @@
     <!-- JavaScript Application Logic -->
     <script>
         function selectRole(role) {
-            appState.role = role;
             const badge = document.getElementById('activeRoleBadge');
             if (role === 'siswa') {
+                appState.role = 'siswa';
+                appState.isGuruAuthenticated = false;
                 badge.innerHTML = `<i class="fa-solid fa-user-graduate text-amber-400"></i> Role: Siswa`;
                 document.getElementById('roleStep1').classList.add('hidden');
+                document.getElementById('roleStepGuru').classList.add('hidden');
                 document.getElementById('roleStepSiswa').classList.remove('hidden');
             } else if (role === 'guru') {
+                // Tampilkan pop-up form verifikasi kode guru (2026)
+                document.getElementById('roleStep1').classList.add('hidden');
+                document.getElementById('roleStepSiswa').classList.add('hidden');
+                document.getElementById('roleStepGuru').classList.remove('hidden');
+                document.getElementById('guruLoginErrorBox').classList.add('hidden');
+                const inputKode = document.getElementById('loginKodeGuruInput');
+                if (inputKode) {
+                    inputKode.value = '';
+                    setTimeout(() => inputKode.focus(), 100);
+                }
+            } else {
+                appState.role = 'guest';
+                appState.isGuruAuthenticated = false;
+                badge.innerHTML = `<i class="fa-solid fa-user-shield text-amber-400"></i> Role: Tamu`;
+                closeRoleModal();
+                navigateMainPage('beranda');
+            }
+        }
+
+        function handleGuruLoginSubmit(event) {
+            event.preventDefault();
+            const kodeInput = document.getElementById('loginKodeGuruInput').value.trim();
+            const errBox = document.getElementById('guruLoginErrorBox');
+            const errMsg = document.getElementById('guruLoginErrorMsg');
+
+            if (kodeInput === "2026") {
+                errBox.classList.add('hidden');
+                appState.role = 'guru';
+                appState.isGuruAuthenticated = true;
+                const badge = document.getElementById('activeRoleBadge');
                 badge.innerHTML = `<i class="fa-solid fa-chalkboard-user text-emerald-400"></i> Role: Guru`;
                 closeRoleModal();
                 navigateMainPage('analisis');
             } else {
-                badge.innerHTML = `<i class="fa-solid fa-user-shield text-amber-400"></i> Role: Tamu`;
-                closeRoleModal();
-                navigateMainPage('beranda');
+                errBox.classList.remove('hidden');
+                errMsg.innerText = "Kode akses guru tidak valid! Silakan masukkan kode: 2026";
+            }
+        }
+
+        function toggleKodeGuruVisibility() {
+            const input = document.getElementById('loginKodeGuruInput');
+            const icon = document.getElementById('kodeGuruEyeIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fa-solid fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fa-solid fa-eye';
             }
         }
 
@@ -1015,6 +1097,7 @@
             document.getElementById('roleSelectionModal').classList.remove('hidden');
             document.getElementById('roleStep1').classList.remove('hidden');
             document.getElementById('roleStepSiswa').classList.add('hidden');
+            document.getElementById('roleStepGuru').classList.add('hidden');
         }
 
         function closeRoleModal() {
@@ -1024,6 +1107,7 @@
         function backToRoleStep1() {
             document.getElementById('roleStep1').classList.remove('hidden');
             document.getElementById('roleStepSiswa').classList.add('hidden');
+            document.getElementById('roleStepGuru').classList.add('hidden');
         }
 
         function enterBerandaGuest() {
@@ -1031,6 +1115,13 @@
         }
 
         function navigateMainPage(pageName) {
+            // Proteksi: Jika mencoba membuka halaman Analisis Asesmen tanpa verifikasi kode guru 2026
+            if (pageName === 'analisis' && !appState.isGuruAuthenticated) {
+                openRoleModal();
+                selectRole('guru');
+                return;
+            }
+
             appState.mainPage = pageName;
             document.querySelectorAll('.main-page').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.main-nav-btn').forEach(btn => {
@@ -1504,6 +1595,7 @@
 
         let appState = {
             role: "guest",
+            isGuruAuthenticated: false,
             mainPage: "beranda",
             activeTab: "dashboard",
             jenjang: "7",
@@ -2094,7 +2186,7 @@
             if (!prog) return;
 
             const header = document.getElementById("detailModalHeader");
-            header.className = type === 'remedial' ? "bg-rose-700 text-white p-6 flex justify-between items-start gap-4" : "bg-emerald-700 text-white p-6 flex justify-between items-start gap-4";
+            header.className = type === 'remedial' ? "bg-rose-700 text-white p-4 sm:p-6 flex justify-between items-start gap-4 shrink-0" : "bg-emerald-700 text-white p-4 sm:p-6 flex justify-between items-start gap-4 shrink-0";
 
             document.getElementById("detailModalBadge").innerText = prog.rangeLabel;
             document.getElementById("detailModalTitle").innerText = prog.title;
